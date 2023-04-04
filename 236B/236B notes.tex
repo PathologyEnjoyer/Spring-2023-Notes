@@ -1,0 +1,238 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Spring 2023}
+	\fancyhead[C]{236B}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\fin}{``\in"}
+\DeclareMathOperator{\Perm}{Perm}
+\DeclareMathOperator{\pdim}{pdim}
+\DeclareMathOperator{\gldim}{gldim}
+\DeclareMathOperator{\lgldim}{lgldim}
+\DeclareMathOperator{\rgldim}{rgldim}
+\DeclareMathOperator{\idim}{idim}
+\newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\RMod}{R-\text{Mod}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\barf}{\bar{f}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\SAB}{SAB}
+\DeclareMathOperator{\PAB}{PAB}
+
+\newcommand{\exactlon}[5]{
+		\begin{tikzcd}
+			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
+		\end{tikzcd}
+}
+
+\title{236B - Homological Algebra}
+\author{John White}
+\date{Spring 2023}
+
+
+\begin{document}
+
+\section*{Lecture 1, 4/3/23}
+
+We will begin thinking about homological algebra in a more categorical way. We use "methods of homological algebra," by Gelfond-Manin (Gelfond $\&$ Manin?). Here is a brief overview of some things we will see during the course:
+
+\begin{itemize}
+
+\item Additive and Abelian categories
+
+\item Example: category of sheaves of Abelian groups on a topological space
+
+\item Derived category (objects: complexes of objects in a given Abelian category, morphisms: a quasi-isomorphism of complexes becomes an isomorphism of objects)
+
+\item Derived functors, $f_*, f^*, f_{!}, f^{!}, \D, \cdots$, $\Hom$ for sheaves
+
+\item Triangulated categories
+
+\item $t$-structures
+
+\item Examples: perverse sheaves
+
+
+\end{itemize} 
+
+
+Let's remind ourselves of some definitions:
+
+\subsection*{Additive $\&$ Abelian categories}
+
+\exm
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $\Ab$, the category of Abelian groups with group homomorphisms.
+
+\item $\RMod$, the category of $R$-modules, with $R$-module homomorphisms as morphisms.
+
+\item $\SAB, \PAB$, the categories of sheaves of Abelian groups and presheaves of Abelian groups
+
+\item Sheaves of modules over a ringed space 
+
+\item (quasi)-coherent sheaves (ask Zhao)
+
+\end{enumerate}
+
+\defn
+
+An \underline{Abelian category} contains the following information:
+
+\begin{enumerate}
+
+\item Any hom-set $\Hom_{\ms{C}}(X, Y)$ is an Abelian group (+), and the composition of morphisms is bi-additive
+
+In particular:
+
+\begin{itemize}
+
+\item $\Hom_{\ms{C}}$ is a functor $\ms{C}^\circ\times\ms{C}\to\Ab$. We notate the first factor with the $^\circ$
+
+\item $0\in\Hom_{\ms{C}}(X, Y)$ for any objects $X, Y$ of $\ms{C}$
+
+\end{itemize}
+
+\item There exists a zero object $0\in\ms{C}$, that is an object such that $\Hom_{\ms{C}}(0,0) = 0$. 
+
+This gives: $\Hom_{\ms{C}}(0, X) = 0$, $\Hom_{\ms{C}}(X, 0) = 0$ for all objects $X$ of $\ms{C}$.
+
+We know that $\Hom_{\ms{C}}(0, 0)$ consists of one object. In particular, it must be $\Id_0 = 0$. So
+\[
+(\begin{tikzcd} 0\ar[r, "f"] & X \end{tikzcd} ) = (\begin{tikzcd} 0 \ar[r, "\Id_0"] & 0 \ar[r, "f"] & X \end{tikzcd}) = (\begin{tikzcd} 0\ar[r, "0"] & X \end{tikzcd})
+\]
+Any two zero objects are isomorphic. 
+
+\item For any $X_1, X_2 \in \ms{C}$, there exists an object $Y$ and morphisms 
+\[
+\begin{tikzcd} X_1 \ar[r, bend left = 30, "i_1"] &\ar[l, bend left = 20, "p_1"] Y \ar[r, bend right = 30, "p_2"'] & \ar[l, bend right = 20, "i_2"'] X_2 \end{tikzcd}
+\]
+such that 
+\begin{align*}
+p_1i_1 & = \Id_{X_1} \\
+p_2i_2 & = \Id_{X_2} \\
+i_1p_1 + i_2p_2 & = \Id_Y \\
+p_2i_1 = p_1i_2 & = 0 \\
+\end{align*}
+
+\lem
+ We have cartesian diagram 
+\[
+\begin{tikzcd}
+Y'\ar[dr, dotted, "\exists!\varphi"]\ar[drr, "p_1'"]\ar[ddr, "p_2'"'] &  &  \\
+& Y \ar[r, "p_1"] \ar[d, "p_2"] & X_1 \ar[d] \\
+& X_2 \ar[r] & 0  \\
+\end{tikzcd}
+\]
+That is, for any $Y'$, with morphisms $p_1', p_2'$ as in the diagram, there is a morphism from $Y'$ to $Y$ making the diagram commute. Similarly, we have co-cartesian diagram
+\[
+\begin{tikzcd}
+Y & \ar[l, "i_1"'] X_1 \\
+X_2 \ar[u, "i_2"] & 0 \ar[l] \ar[u] \\
+\end{tikzcd}
+\]
+
+\proof 
+
+We need to construct $\varphi:Y'\to Y$ such that $p_1' = p_1\varphi$ and $p_2'=p_2\varphi$
+
+Take $\varphi = i_1p_1' + i_2p_2'$. Then 
+\[
+p_1\circ\varphi = \underbrace{p_1i_1}_{=\Id_{X_1}}p_1' + \underbrace{p_1i_2}_{=0}p_2' = p_1'
+\]
+The uniqueness of $\varphi$ can be verified as an exercise
+
+\qed
+
+\defn
+
+An \underline{additive category} is one which satisfies only the first three of these axioms
+
+\item To state the 4th axiom of Abelian categories, we need more notations:
+
+\defn Let $A_1,A_2$ be objects of $\ms{C}$, and let $\varphi:X\to Y$.
+
+\begin{enumerate}
+\item A \underline{kernel} of $\varphi$ is a morphism $i:Z\to X$ such that 
+\begin{enumerate}[label=(\alph*)]
+
+\item $\varphi\circ i = 0$
+
+\item For all $i':Z'\to X$ such that $\varphi\circ i' = 0$, there is a unique $g:Z'\to Z$ such that $i'=i\circ g$. 
+\[
+\begin{tikzcd}
+ & Z' \ar[d, "i'"] \ar[dr, "0"] \ar[dl, dotted, "g"'] & \\
+Z \ar[r, "i"] & X \ar[r, "\varphi"] & Y \\
+\end{tikzcd}
+\]
+
+\end{enumerate}
+
+\item A \underline{cokernel} is a kernel but with the arrows reversed
+
+\end{enumerate}
+
+Exercise: Verify that 1 is equivalent to the following: for all $Z'\in\ms{C}$, 
+\[
+\begin{tikzcd}
+0 \ar[r]& \Hom(Z',Z) \ar[r, "i_*"] & \Hom(Z', X) \ar[r, "\varphi_*"] & \Hom(Z', Y) 
+\end{tikzcd}
+\]
+is exact, and similarly for cokernel
+
+With all that, we are ready for: 
+
+\item For any $\varphi:X\to Y$, there exists a sequence of morphisms 
+\[
+\begin{tikzcd}
+K\ar[r, "k"] & X \ar[r, "i"] & I \ar[r, "j"] & Y \ar[r, "c"] & K'
+\end{tikzcd}
+\]
+such that
+\begin{enumerate}[label=(\alph*)]
+
+\item $j\circ i = \varphi$
+
+\item $k = \ker \varphi, k' = \coker\varphi$
+
+\item $I = \coker k = \ker c$
+
+\end{enumerate}
+
+\end{enumerate}
+
+This finishes the definition
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
