@@ -1,0 +1,257 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\pagestyle{fancy}{
+	\fancyhead[L]{Spring 2023}
+	\fancyhead[C]{201C - Real Analysis}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+
+\newcommand{\seq}[2][\oo]{_{#2 = 1}^#1}
+\newcommand{\barr}{{\bar{\R}}}
+\newcommand{\cupk}[1][\oo]{\cup\seq[#1]{k}}
+\newcommand{\cupi}[1][\oo]{\cup\seq[#1]{i}}
+\newcommand{\cupn}[1][\oo]{\cup\seq[#1]{n}}
+\newcommand{\bigcupk}[1][\oo]{\bigcup\seq[#1]{k}}
+\newcommand{\bigcupi}[1][\oo]{\bigcup\seq[#1]{i}}
+\newcommand{\bigcupn}[1][\oo]{\bigcup\seq[#1]{n}}
+\newcommand{\capk}[1][\oo]{\cap\seq[#1]{k}}
+\newcommand{\capi}[1][\oo]{\cap\seq[#1]{i}}
+\newcommand{\capn}[1][\oo]{\cap\seq[#1]{n}}
+\newcommand{\bigcapk}[1][\oo]{\bigcap\seq[#1]{k}}
+\newcommand{\bigcapi}[1][\oo]{\bigcap\seq[#1]{i}}
+\newcommand{\bigcapn}[1][\oo]{\bigcap\seq[#1]{n}}
+\newcommand{\Dmn}{D_\mu\nu}
+\newcommand{\Dnm}{D_nu\mu}
+\newcommand{\loc}{loc}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\BV}{BV}
+\DeclareMathOperator{\Monp}{Mon^+}
+\DeclareMathOperator{\AC}{AC}
+\DeclareMathOperator{\Lip}{Lip}
+\title{201C - Functional Analysis}
+\author{John White}
+\date{Spring 2023}
+
+
+
+
+\begin{document}
+
+\section*{Lecture 1, 4/4/23}
+
+We use the following two books:
+
+\begin{enumerate}
+
+\item Linear Analysis, by B. Bolob\'as 
+
+\item Analysis, by E. Lieb and M. Loss
+
+\end{enumerate}
+
+We begin with metric spaces
+
+\defn
+
+Let $X$ be a nonempty set and let $\rho:X\times X\to[0,\oo)$. Then $\rho(x, y)$ is called \underline{a metric on $X$} if 
+
+\begin{enumerate}[label=(\roman*)]
+
+\item $\rho(x, y) \geq 0$ for all $x, y \in X$ and $\rho(x, y) = 0$ iff $x = y$. 
+
+\item $\rho(x, y) = \rho(y, x)$ for all $x, y \in X$
+
+\item $\rho(x, y) \leq \rho(x, z) + \rho(z, y)$ for any $x, y, z \in X$. This is called the \underline{triangle inequality}
+
+\end{enumerate}
+
+$\rho$ is also called a \underline{distance}. As in, $\rho(x, y)$ is the \underline{distance between $x$ and $y$}. 
+
+\exm
+
+Let $X = \R^n$, and define $\rho(x, y) = \left(\sum_{i=1}^n(x_i - y_i)^2\right)^{\frac{1}{2}}$. We can in fact replace $2$ in this expression with any real $r \geq 1$, or with $\oo$ (in which case we just take the maximum)
+
+\exm
+
+Let $X = C[a, b]$, the set of continuous $f:[a,b]\to\R$, and define $\rho(x, y) = \max_{x\in[a,b]}|f(x) - g(x)|$
+
+\defn
+
+Let $(X, \rho)$ be a metric space. For all $x \in X$ and $r > 0$, we defined the \underline{open ball centered at $x$ and having radius $r$} as
+\[
+B_r(x) \eqdef \{ y \in X \mid \rho(x, y) < r\}
+\]
+The closed ball is
+\[
+\bar{B_r}(x) \eqdef \{y \in X \mid \rho(x, y) \leq r\}
+\]
+
+\defn
+
+Let $(X, \rho)$ be a metric space and let $A \subseteq X$. Then $a \in A$ is
+
+\begin{enumerate}[label=(\roman*)]
+
+\item an \underline{interior point} of $A$ if there is some $r>0$ such that $B_r(a) \subseteq A$
+
+\item The set of all interior points of $A$ is called the \underline{interior of $A$} and is denoted by $\operatorname{int} A$, or $A^\circ$
+
+\item A set $A$ is said to be $\underline{open}$ if $A = A^\circ$
+
+\end{enumerate}
+
+\exm
+
+Let $X = \R^3$, $A = \{(x, y, 0) \mid x, y \in \R\}$. We can see that $A^\circ = \varnothing$.
+
+\prop
+
+For any $x, r$, $B_r(x)$ is open.
+
+\proof
+
+Let $y \in B_r(x)$. Let $r_1 = r - \rho(x, y) > 0$. 
+
+Consider $z \in B_{r_1}(y)$. By the triangle inequality, $\rho(x, z) \leq \rho(z, y) + \rho(y, x) < r_1 + \rho(x, y) = r$. So $z \in B_r(x)$, so $B_{r_1}(y) \subseteq B_r(x)$, so $y$ is an interior point. $y$ was arbitrary, so we are done.
+
+\qed
+
+\defn
+
+$A \subseteq X$ is \underline{closed} if $A^c = X\setminus A$ is open.
+
+\defn
+
+The point $x \in X$ is a \underline{limit point} of $A$ if there exists a sequence $\{x_n\}\seq{n} \subseteq A$ such that $\rho(x, x_n)\to0$ as $n\to\oo$
+
+\defn
+
+Let $\{x_n\}\subseteq X$, $x \in X$. Then we we say \underline{$x_n$ converges to $x$}, or $x_n\to x$, if $\rho(x_n, x)\to0$ as $n\to\oo$. In this case, $\{x_n\}\seq{n}$ is said to be \underline{convergent, with limit $x$}.
+
+\thm
+
+If a limit of a sequence $\{x_n\}\subseteq X$ exists, then it is unique. 
+
+\proof
+
+Think
+
+\qed
+
+\defn
+
+A sequence $\{x_n\}\seq{n}\subseteq X$ is called a \underline{Cauchy sequence} if $\rho(x_n, x_m)\to0$ as $n,m\to\oo$. That is, for any $\varepsilon>0$, there exists an $N \in \N$, such that if $n, m \geq N$, then $\rho(x_n, x_m) < \varepsilon$
+
+\thm
+
+Any convergent sequence is Cauchy
+
+\proof
+
+Think
+
+\qed
+
+\defn
+
+A metric space $(X,\rho)$ is called \underline{complete} if every Cauchy sequence converges to some point in $X$. A metric space which is not complete is called \underline{incomplete}.
+
+\exm 
+
+$X = \R^n$ or $X = C[a,b]$ with the metrics above are complete. 
+
+\exm
+
+$\Q$ is incomplete. 
+
+\defn
+
+Let $(X, \rho)$ and $(Y, \tilde{\rho})$ be metric spaces. Then $X$ and $Y$ are \underline{isometric} if there exist a bijection $f:X\to Y$ such that $\rho(x_1, x_2) = \tilde{\rho}(f(x_1),f(x_2))$ for all $x_1, x_2 \in X$. 
+
+\defn
+
+Let $(X, \rho)$ be a metric space and let $A, B \subseteq X$. Then we say that $A$ is \underline{dense in $B$} if $B \subseteq \bar{A}$, where $\bar{A} = \{$all limit points of $A\}$
+
+\defn
+
+Let $(X, \rho)$ and $(\tilde{X},\tilde{\rho})$ be metric spaces. Then $(\tilde{X},\tilde{\rho})$ is a \underline{completion of $(X, \rho)$} if
+\begin{enumerate}[label=(\roman*)]
+
+\item $X \subseteq \tilde{X}$, and $\tilde{\rho}(x, y) = \rho(x, y)$ for any $x, y \in X$
+
+\item $X$ is dense in $\tilde{X}$ in the $\tilde{\rho}$ metric
+
+\item $(\tilde{X},\tilde{\rho})$ is complete
+
+\end{enumerate}
+
+\thm 
+
+Any incomplete metric space $(X,\rho)$ admits a completion which is unique up to isometry. 
+
+\proof
+
+Think
+
+\qed
+
+\thm (The nested ball theorem)
+
+Let $(X,\rho)$ be a complete metric space, and let $\bar{B_n} = \bar{B_{r_n}}(x_n) \subseteq X$ be a sequence of nested closed balls (meaning $\bar{B_{n + 1}} \subseteq \bar{B_n}$) such that $r_n\to0$. Then $\bigcapn \bar{B_n} \neq \varnothing$. 
+
+\proof
+
+Consider the centers $\{x_n\}\seq{n} \subseteq X$. 
+
+\claim $\{x_n\}$ is Cauchy
+
+\proof
+
+If $m \geq n$, then $\bar{B_m} \subseteq \bar{B_m}$, so $x_m \in \bar{B_m}$, so $\rho(x_m, x_n) \leq r_n$, so $\rho(x_n,x_m)\to0$ as $m,n\to\oo$.
+
+\qed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
