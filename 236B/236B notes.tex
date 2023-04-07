@@ -28,16 +28,19 @@
 \DeclareMathOperator{\lgldim}{lgldim}
 \DeclareMathOperator{\rgldim}{rgldim}
 \DeclareMathOperator{\idim}{idim}
+\DeclareMathOperator{\supp}{supp}
 \newcommand{\Rmod}{R-\text{mod}}
 \newcommand{\RMod}{R-\text{Mod}}
 \newcommand{\onto}{\twoheadrightarrow}
 \newcommand{\barf}{\bar{f}}
 \newcommand{\D}{\mathbb{D}}
+\newcommand{\into}{\hookrightarrow}
 \renewcommand{\P}{\mathbb{P}}
 \renewcommand{\E}{\mathbb{E}}
 \DeclareMathOperator{\Ext}{Ext}
-\DeclareMathOperator{\SAB}{SAB}
-\DeclareMathOperator{\PAB}{PAB}
+\DeclareMathOperator{\SAb}{SAb}
+\DeclareMathOperator{\PAb}{PAb}
+\DeclareMathOperator{\Ob}{Ob}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -88,7 +91,7 @@ Let's remind ourselves of some definitions:
 
 \item $\RMod$, the category of $R$-modules, with $R$-module homomorphisms as morphisms.
 
-\item $\SAB, \PAB$, the categories of sheaves of Abelian groups and presheaves of Abelian groups
+\item $\SAb, \PAb$, the categories of sheaves of Abelian groups and presheaves of Abelian groups
 
 \item Sheaves of modules over a ringed space 
 
@@ -223,6 +226,268 @@ such that
 \end{enumerate}
 
 This finishes the definition
+
+\section*{Lecture 2, 4/5/23}
+
+\subsection*{Sheaves}
+
+Here are some examples of sheaves from complex analysis
+
+\exm\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item The set of holomorphic functions on $\mbb{P} = \C \sup \{\oo\}$
+
+For each open subset $U$ of $\mbb{P}$, we can consider the ring of holomorphic function $f:U\to\C$, $\ms{H}(U)$. 
+
+The collection of $\{(f, V) \mid V \text{ open}, f \in \ms{H}(V) \}$ is called the sheaf $\ms{O}$ of holomorphic functions on $\mbb{P}$.
+
+\item The sheaf of solutions of a linear ODE
+
+Let $U \subseteq \mbb{P}$ be open, and let $a_i(z) \in \Gamma(U,\ms{O})$ (in this context this will wind up meaning $\ms{H}(U)$), $i = 0,1,\dots,n - 1$. 
+
+Denote by $S$ the collection of $(V, f)$ such that $V \subseteq U$ is open, and $f$ is holomorphic in $V$ such that 
+\[
+Lf \eqdef \frac{d^nf}{dz^n} + \sum_{i=0}^{n - 1}a_i(z)\frac{d^if}{dz^i} = 0
+\]
+
+Let $\Gamma(V) = \{f \in \ms{H}(V) \mid Lf = 0 \}$. When $V$ is connected and simply connected, it is a basic result of ODEs that $\Gamma(V)\cong \C^n$
+
+In general, it may have to do with the topology of $V$. For example, if $U = \C\setminus\{0\}$, $L = \frac{d^2}{dz^2} + \frac{1}{z}\frac{d}{dz}$, the solutions are $c_1\log(z) + c_2$ for any ``branch" of $\log(z)$, but $\Gamma(V) = \{\text{constant}\}$. This is related to the Riemann-Hilbert correspondence (whatever that is)
+
+\end{enumerate}
+
+\defn\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item A \underline{presheaf of sets $\mc{F}$ on a topological space $Y$} consists of the following data:
+
+\begin{itemize}
+
+\item A set $\mc{F}(U)$ for any open $U \subseteq Y$
+
+\item For any open $V \subseteq U$, a (restriction) map $\gamma_{U,V}:\mc{F}(U)\to\mc{F}(V)$ such that $\gamma_{V,V} = \Id_{\mc{F}(V)}$, and if $W \subseteq V \subseteq U$, then $\gamma_{V,W}\circ\gamma_{U,V} = \gamma_{U,W}$. When there is ambiguity about which sheaf $\gamma$ belongs to, we further specify with $\gamma^{\mc{F}}$
+
+\end{itemize}
+
+\item A presheaf $\mc{F}$ is a \underline{sheaf} if: 
+
+\begin{itemize}
+
+\item For any open covering $U = \cup_{i\in I}U_i$ and $s_i \in \mc{F}(U_i)$ such that for all $i, j \in I$, 
+\[
+\gamma_{U_i, U_i \cap U_j}(s_i) = \gamma_{U_j, U_i \cap U_j}(s_j)
+\]
+then there exists a unique $s\in \mc{F}(U)$ such that $s_i = \gamma_{U,U_i}(s)$ for all $i$. 
+
+\end{itemize}
+
+\item A \underline{morphism of presheaves} $f:\mc{F}\to\mc{G}$ is a family of maps $f(U):\mc{F}(U)\to\mc{G}(U)$ for all open $U \subseteq Y$, such that for all open $V \subseteq U$, the diagram
+\[
+\begin{tikzcd}
+\mc{F}(U) \ar[d, "\gamma^{\mc{F}}_{U,V}"'] \ar[r, "f(U)"] & \mc{G}(U) \ar[d, "\gamma^{\mc{G}}_{U, V}"] \\
+\mc{F}(V) \ar[r, "f(V)"] & \mc{G}(V) \\
+\end{tikzcd}
+\]
+commutes.
+
+A \underline{morphism of sheaves} is a morphism of the underlying presheaves
+
+
+
+\end{enumerate}
+
+A presheaf $\mc{F}$ of groups/rings/$\mbb{F}$-vector spaces is a presheaf such that $\mc{F}(U)$ is a group/ring/$\mbb{F}$-vector space. Then $\gamma_{U,V}$ is a morphism of groups/rings/$\mbb{F}$-vector spaces. 
+
+\,
+
+Let $\mc{F},\mc{G}$ be two Abelian presheaves (meaning presheaves of Abelian groups), and let $f:\mc{F}\to\mc{G}$ be a morphism of Abelian presheaves. 
+
+Let $K(U) = \ker(f(U))$, $C(U) = \coker(f(U))$ with natural restrictions.
+
+\defn
+
+A sequence of presheaves
+\[
+\begin{tikzcd}
+\mc{F}\ar[r, "f"] & \mc{G} \ar[r, "g"] & \mc{H}
+\end{tikzcd}
+\]
+is \underline{exact} if, for all open $U$, 
+\[
+\begin{tikzcd}
+\mc{F}(U) \ar[r, "f(U)"] & \mc{G}(U) \ar[r, "g(U)"] & \mc{H}(U)
+\end{tikzcd}
+\]
+is exact. 
+
+So, presheaves of Abelian groups, with morphisms of Abelian presheaves, is an Abelian category.
+
+How about Abelian sheaves? 
+
+Let $f:\mc{F}\to\mc{G}$ be a morphism of Abelian sheaves. Once again, let $K(U) = \ker(f(U)), C(U) = \coker(f(U)) = \frac{\mc{G}(U)}{f(U)(\mc{F}(U))}$. 
+
+\prop\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item The kernel $K$ is an Abelian sheaf
+
+\item The cokernel $C$ is always a presheaf, but might not be a sheaf.
+
+
+\end{enumerate}
+
+\section*{Lecture 3, 4/7/23}
+
+\proof\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Let $U = \bigcup U_i$, $s_i \in K(U_i)$ agree on pairwise intersections. As $K(U_i) \into \mc{F}(U_i)$, there exists a unique $s \in \mc{F}(U)$ such that $s|_{U_i} = s_i \in \mc{F}(U_i)$ for all $i$.
+
+Note that $f(s)|_{U_i} = f(s|_{U_i}) = 0$, so $f(s) = 0 \in \mc{G}(U)$. Here, we are using the uniqueness of gluing in $\mc{G}$.  
+
+Then $s \fin K(U)$
+
+\item First, we give an example of a cokernel which is a presheaf, but not a sheaf. Let $Y = \C\setminus\{0\}$, $f:\mc{O}_Y\to\mc{O}_Y$ given by $\varphi\mapsto\frac{d\varphi}{d\zeta}$. 
+
+\begin{itemize}
+
+\item For any $y \in Y$, there exists a neighborhood $V_y \ni y$ such that $\coker f(V_y) = 0$. That is, for every $f\in \mc{H}(V_y)$, there is a $g \in \mc{H}(V_y)$ so that $\frac{dg}{d\zeta} = f$ in $V_y$ (every point admits a simply connected neighborhood)
+
+\item However, $\coker f(Y) \cong \C$: $\Psi = \sum_{i=-\oo}^\oo a_i\zeta^i = \frac{d\varphi}{d\zeta}$ has a solution iff $a_{-1} = 0$. This is because $\frac{1}{z}$ is defined on $Y$. (keyword: vanishing cycle and v-filtration). 
+
+Hence this violates the uniqueness: any $\bar{\Psi} \in \coker f(Y)$ restricts to $0 \in \coker f(V_y)$. However, the $V_y$ cover $Y$. So, we have an open cover, with sections of each, which agree on intersections, but which do not have a \underline{unique} global section to which they all glue. So, this is not a sheaf.
+
+\end{itemize}
+
+\end{enumerate}
+
+\qed
+
+\subsection*{Sheafification}
+
+Denote by $\SAb$ the additive category of abelian sheaves on a fixed topological space $M$. We have the inclusion functor $\iota:\SAb\to\PAb$. 
+
+\prop
+
+$\iota$ admits a left adjoint $s:\PAb\to\SAb$, i.e. 
+\[
+\Hom_{\SAb}(sX, Y) \cong \Hom_{\PAb}(X, \iota Y)
+\]
+and this isomorphism is natural in both $X$ and $Y$.
+
+\proof
+
+Let 
+\[
+s(X)(U) \eqdef \frac{\{(\{U_i\}_{i\in I}, e_i) \mid U = \bigcup_{i\in I} U_i, e_i \in X(U_i), e_i|_{U_i \cap U_j} = e_j|_{U_i \cap U_j}\}}{\sim}
+\]
+Where $(\{U_i\}, e_i) \sim (\{U_j'\}, e_j)$ if there exists $\{U_k''\}$ refining $\{U_i\}, \{U_j'\}$ and $e_i|_{U_k''} = e_j'|_{U_k''}$ for $U_k'' \subset U_i \cap U_j'$. 
+
+Define $\gamma_{U,V}:sX(U)\to sX(V)$, for $V \subseteq U$, by 
+\[
+\gamma_{U,V}[(\{U_i\},e_i)] = [\{U_i \cap V\}, e_i|_{U_i \cap V}]
+\]
+
+There is a lot to verify; see [GM] 2.5.13
+
+\qed
+
+\exm
+
+For $\coker f$ from previous example, now $[\bar{\Psi}] = [0]$, since, when we restrict to $V_y$, $\bar{\Psi}$ becomes 0. So $\coker f = 0$
+
+\,
+
+With this modification, $\SAb$ is an abelian category!
+
+\prop
+
+Let $\varphi:X\to Y$ be a morphism of abelian sheaves, and let 
+\[
+\begin{tikzcd}
+K\ar[r, "k"] & \iota X \ar[r, "i"] & I \ar[r, "j"] & \iota Y \ar[r, "c"] & K'
+\end{tikzcd}
+\]
+be the canonical decomposition of $\iota(\varphi)$ in (the abelian category!) $\PAb$. Then
+\[
+\begin{tikzcd}
+sK(= K)\ar[r, "sk"] & X (= s\iota X) \ar[r, "si"] & sI \ar[r, "sj"] & Y (= s\iota Y) \ar[r, "sc"] & sK'
+\end{tikzcd}
+\]
+is the canonical decomposition of $\varphi$ in $\SAb$. In particular, $\SAb$ is an abelian category. 
+
+\proof
+
+We'll just verify that $sK'$ is indeed the cokernel:
+
+Let $Z\in \Ob\SAb$. Then there exists an exact sequence
+\[
+\exactshort{\Hom_{\PAb}(K',\iota Z)}{}{\Hom_{\PAb}(Y,\iota Z)}{}{\Hom_{\PAb}(X,\iota Z)}
+\]
+(this is equivalent to saying $K'$ is $\coker\varphi$ in $\PAb$). By adjunction,
+\[
+\exactshort{\Hom_{\SAb}(sK', Z)}{}{\Hom_{SAb}(\underbrace{sY}_{=Y}, Z)}{}{\Hom_{\SAb}(sX,Z)}
+\]
+is exact. Other parts are exercises
+
+\qed
+
+\defn
+
+Let $A$ be an abelian group, $Y$ a topological space. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item The \underline{constant presheaf $\A$ on $Y$} is $\A(U) = A$ for all open $U \subseteq Y$, and $\gamma_{U,V} = \Id_A$ for any open $V \subseteq U$. 
+
+\item The \underline{constant sheaf $\mc{A}$ on Y} is $s\A$.
+
+(Check: for connected $U$, $\mc{A}(U) = A$)
+
+\item A sheaf $\mc{F}$ is \underline{locally constant} if any point has a neighborhood $U$ such that $\mc{F}|_U$ is a constant sheaf. (for open $V \subset U \subset Y$, $\mc{F}|_U(V) \eqdef \mc{F}(V)$) (keyword: representation of $\pi_1$ and local systems)
+
+\end{enumerate}
+
+\subsection*{Germs and stalks}
+
+\defn
+
+The \underline{stalk of a (pre)sheaf at a point $y$} is
+\[
+\mc{F}_y \eqdef \lim_{\longrightarrow\atop{V\ni y}}\mc{F}(V)
+\]
+with the limit taken with respect to inclusion.
+
+Concretely, $\mc{F}_y \eqdef \frac{\{(s, V) \mid y \in V, s \in \mc{F}(V)\}}{\sim}$, where $(s, V) \sim (s', V')$ if there exists a $W \subseteq V \cap V'$ such that $\gamma_{V,W}(s) = \gamma_{V',W}(s')$. 
+
+Such an equivalence class is called a \underline{germ}
+
+\rem [GM, I.5.5, I.5.6]
+
+If we have an exact sequence of sheaves
+\[
+\exactshort{\mc{F}'}{}{\mc{F}}{}{\mc{F}''}
+\]
+if and only if for any $y \in Y$, 
+\[
+\exactshort{\mc{F}_y'}{}{\mc{F}_y}{}{\mc{F}_y''}
+\]
+is exact. This can be verified as an extremely important exercise.
+
+\defn
+
+For $s \in \mc{F}(U)$, the \underline{support of $s$}, $\supp s$, is the closure of the set of points at which the germ of $s$ is not zero. 
+
+\rem 
+
+In the definition of a stalk, we can replace a point $y$ by a closed subset $Z$ of $Y$.
+
+
 
 
 
