@@ -224,12 +224,370 @@ If $m \geq n$, then $\bar{B_m} \subseteq \bar{B_m}$, so $x_m \in \bar{B_m}$, so 
 
 \qed
 
+\section*{Lecture 2, 4/6/23}
 
+\defn
 
+Let $(X, \rho)$ be a metric space, and let $A \subseteq X$. Then $A$ is \underline{nowhere dense} if $\operatorname{int}(\bar{A}) = \varnothing$
 
+\defn
 
+Let $(X, \rho)$ be a metric space, and $A$ a set. $A \subseteq X$ is \underline{of Baire first category} if $A = \bigcupn A_n$, where $A_n$ are nowhere dense. Otherwise, $A$ is \underline{of Baire second category}
 
+\thm (Baire Category Theorem)
 
+A complete space is of Baire second category. 
+
+\proof
+
+Towards contradiction, assume $X = \bigcupn A_n$, where $A_n \subseteq X$ are nowhere dense. 
+
+Let $B_1 = B(X_1, 1)$ be a ball in $X$. 
+
+Since $A_1$ is nowhere dense, there exists $\bar{B}_2 = \bar{B}(x_2, r_2) \subseteq \bar{B}_1$ such that $\bar{B}_2 \cap A_1 = \varnothing$. 
+
+Without loss of generality, assume $r_2 < \frac{1}{2}$. Now there exists $\bar{B}_3 = \bar{B}(x_3, r_3) \subseteq \bar{B}_2$ such that $\bar{B}_2 \cap A_1 = \varnothing$. 
+
+Without loss of generality, assume $r_3 < \frac13$.
+
+At the $k$th step, there exists $\bar{B}_{k + 1} = \bar{B}(x_{k + 1}, r_{k + 1}) \subseteq \bar{B}_k$ such that $\bar{B}_{k + 1}\cap A_k = \varnothing$, $r_{k + 1} \leq \frac{1}{k + 1}$. 
+
+By the nested balls theorem, $\bigcapn \bar{B}_n = \{x\}$. By construction, $x\not\in A_n$ for all $n\in\N$. So $X \neq \bigcupn A_n$, a contradiction. 
+
+\qed
+
+\defn
+
+Let $(X, \rho)$ be a metric space and let $A \subseteq X$. $A$ collection $\{U_\alpha\}_{\alpha \in A}$ of open subsets of $X$ is an \underline{open cover of $A$} if $A \subseteq \bigcup_{\alpha\in A}U_\alpha$
+
+A set $K \subseteq X$ is called \underline{compact} if any open cover of $K$ has a finite subcover. 
+
+Equivalently, $K \subseteq X$ is compact if any sequence $\{x_n\} \subseteq K$ has a limit point $x \in K$.
+
+\thm (Nested compact set theorem)
+
+Let $(X, \rho)$ be a metric space and let $\{K_n\}\seq{n}$ be a sequence of nonempty and nested compact sets. Then $\bigcapn K_n \neq\varnothing$. 
+
+\proof
+
+Consider $\{x_n\}\seq{n}$ with $x_n \in K_n$. 
+
+Note for all $n, x_n \in K_1$. Thus there exists a subsequence $\{x_{n_k}\}$ converging to some $x \in K_1$. 
+
+We claim that $x \in \bigcapn K_n$.  
+
+Fix $m \in \N$. $x_{n_m}, x_{n_{m + 1}}, x_{n_{m + 2}}, \dots \in K_m$. 
+
+The only limit point is $x$, thus $x \in K_m$. 
+
+\qed
+
+\defn
+
+Let $(X, \rho)$ be a metric space and let $A \subseteq X$. Then $A$ is bounded if $A \subseteq B(x, r)$ for some $x \in X, r > 0$. 
+
+\thm
+
+A compact set in $(X, \rho)$ is closed and bounded. 
+
+\proof
+
+think
+
+\qed
+
+\subsection*{\underline{Normed Spaces}}
+
+\defn 
+
+Let $X$ be a vector space. A function $\norm{\cdot}:X\to\R$ is called \underline{a norm on $X$} if
+\begin{enumerate}[label=(\roman*)]
+
+\item $\norm{x}\geq0$ for all $x \in X$.  Further, $\norm{x} = 0 \iff x = 0$
+\item $\norm{\alpha x} = |\alpha|\norm{x}$ for all $x \in X, \alpha \in \C$.
+\item $\norm{x + y} \leq \norm{x} + \norm{y}$
+
+\end{enumerate}
+
+($X, \norm{\cdot}$) is called \underline{a normed space}
+
+Remark:
+
+If one defines $\rho(x, y) = \norm{x - y}$, then $(X, \rho)$ is a metric space.
+
+\section*{Lecture 3, 4/11/23}
+
+\subsection*{\underline{Return to metric spaces}}
+
+\defn Let $(X, d)$ be a metric space. Let $T:X\to X$ be a mapping. Then $T$ is said to be \underline{a contraction} if there exists $\alpha\in(0,1)$ such that $\rho(Tx,Ty) \leq \alpha\rho(x, y)$ for all $x, y \in X$. 
+
+\thm (Contraction mapping principle)
+
+Let $(X, \rho)$ be a complete metric space and let $T:X\to X$ be a contraction. Then $T$ has a unique fixed point, i.e. there exists a unique $x \in X$ such that $Tx = x$. 
+
+\proof
+
+Proven in 221A
+
+\qed
+
+\claim
+
+$(0, 1) \neq \bigcupn\,[a_n, b_n]$, $[a_n, b_n]$ are disjoint. 
+
+\proof 
+
+Assume $(0, 1) = \bigcupn\, [a_n,b_n]$
+
+We claim the set $X = \bigcupn \{a_n, b_n \} \cup \{0\} \cup \{1\}$ is closed. Thus $X$ is a complete metric space. Next, we claim that $\{a_n\},\{b_n\},\{0\},\{1\}$
+
+Alternative proof:
+
+Assume $(0, 1) = \bigcupn\,[a_n,b_n]$. 
+
+We construct a function $f:(0,1)\to\R$ continuous that takes countably many values. blah blah blah
+
+\qed
+
+\subsection*{\underline{Return to normed spaces}}
+
+\defn
+
+A complete normed space is called a \underline{Banach Space}
+
+\defn Let $X, Y$ be normed spaces on $K = \R$ or $\C$. A mapping $T:X\to Y$ is \underline{linear} if $T(\alpha x_1 + \beta x_2) = \alpha Tx_1 + \beta Tx_2$ for all $x_1, x_2 \in X$ and all $\alpha,\beta\in K$.
+
+\defn
+
+Let $X, Y$ be normed spaces on $K = \R$ or $\C$. Let $T:X\to Y$ be linear. Then
+\begin{enumerate}
+
+\item $T$ is \underline{bounded} if there exists $M>0$ such that for all $x \in X, \norm{Tx}\leq M\norm{x}$
+
+\item The \underline{operator norm} is 
+\[
+\norm{T}\eqdef \sup_{x\in X, x\neq0}\frac{\norm{Tx}}{\norm{x}}
+\]
+If $T$ is bounded, then $\norm{T}\leq M$
+\end{enumerate}
+
+\defn
+
+Let $X$ and $Y$ be normed spaces on $K = \R$ or $\C$. Let $T:X\to Y$ be linear. $T$ is \underline{continuous at $x_0 \in X$} if $x\to x_0$ implies $Tx\to Tx_0$.
+
+\thm
+
+Let $X, Y$ be normed spaces on $K = \R$ or $\C$. Let $T:X\to Y$ be linear. Then the following are equivalent:
+\begin{enumerate}
+
+\item $T$ is continuous at some $x_0 \in X$. 
+\item $T$ is continuous at 0
+\item $T$ is continuous on $X$
+\item $T$ is bounded
+\item $T$ is Lipschitz
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(3)\Rightarrow (1),(2)$}
+
+This is obvious
+
+\subsection*{$(1)\Rightarrow(3)$}
+
+Assume $T$ is continuous at some $x_0$. We want to show continuity at $y_0$. 
+
+Suppose $(y_n)\to y$. Define $x_n = y_n - y_0 + x_0$. 
+
+Note $x_n \to x_0$. So $Tx_n \to Tx_0$. Thus
+\[
+\norm{Ty_n - Ty_0} = \norm{Tx_n + Ty_0 - Tx_0 - Ty_0} \to 0
+\]
+Letting $x_0 = 0$, we get $(2)\Rightarrow(3)$
+
+\subsection*{$(4)\Rightarrow(2)$}
+
+Suppose $\norm{Tx} \leq M\norm{x}$ for all $x \in X$. 
+
+Then as $x \to 0$, $\norm{Tx - T0} = \norm{Tx} \leq M\norm{x} \to M\norm{0} = 0$. 
+
+\subsection*{$(2)\Rightarrow(4)$}
+
+For all $\varepsilon>0$, there exists $\delta>0$ such that $\norm{x}<\delta\implies \norm{Tx}<\varepsilon$. 
+
+Choose $\varepsilon = 1$. Then there exists $\delta>0$ such that $\norm{x} < \delta \Rightarrow \norm{Tx} < 1$
+
+For any $x \in X, x\neq 0 \implies Tx = \frac{\norm{x}}{\delta}T(\frac{x}{\norm{x}}\delta)$
+
+Set $\bar{x} = \frac{x}{\norm{x}} \delta$. 
+
+Thus $\norm{Tx} = \frac{\norm{x}}{\delta}\norm{T\bar{x}} \leq \frac{\norm{x}}{\delta} = \frac{1}{\delta}\norm{x}$
+
+So $\norm{Tx} \leq \frac{1}{\delta}\norm{x}$ for all $x \in X$, i.e. $M = \frac{1}{\delta}$.
+
+\section*{Lecture 4, 4/13/23}
+
+\subsection*{$(4)\Rightarrow(5)$}
+
+$\norm{Tx_1 - Tx_2} = \norm{T(x_1 - x_2)} \leq M\norm{x_1 - x_2}$. Thus $T$ is Lipshitz. 
+
+Clearly, $(5)\Rightarrow(3)$.
+
+\qed
+
+\defn
+
+For $X, Y$ normed spaces, the set of all bounded linear operators $T:X\to Y$ is denoted by $B(X, Y)$. 
+
+\thm Let $X, Y$ be normed spaces and let $T \in B(X, Y)$. Then 
+\[
+\norm{T} = \sup_{\norm{x}\leq1}\norm{Tx} = \sup_{\norm{x} = 1}\norm{Tx} = \sup_{\norm{x}<1}\norm{Tx}
+\]
+
+\proof
+
+$\norm{T} = \sup_{x\in X, x\neq0}\frac{\norm{Tx}}{\norm{x}} = \sup_{x\in X, x \neq 0}\norm{T(\frac{x}{\norm{x}})}$. 
+
+So, letting $\bar{x} = \frac{x}{\norm{x}}$, $\norm{T} = \sup_{x\in X, x\neq0}\norm{T\bar{x}} \leq \sup_{\norm{x}=1}\norm{Tx}$
+
+Similarly, $\norm{T} \leq \sup_{\norm{x}\leq1}\norm{Tx}$
+
+$\norm{T} = \sup_{x\in X, x\neq0}\frac{\norm{Tx}}{\norm{x}} \geq \sup_{x\in X, \norm{x} = 1}\frac{\norm{Tx}}{\norm{x}}$, so we get equality. 
+
+We could prove $<$ using limits. 
+
+\thm 
+
+Let $X$ and $Y$ be normed spaces and let $T:X\to Y$ be linear. Then $T$ is bounded iff $T$ maps bounded sets to bounded sets.
+
+\proof
+
+Later
+
+\qed
+
+Note: $\norm{Tx} \leq \norm{T}\norm{x}$. Also, a convergent sequence in a metric space is bounded. 
+
+\thm Let $X$ and $Y$ be normed spaces. Then $B(X, Y)$ is a normed space endowed with the operator norm $\norm{T}$. Moreover, if $Y$ is Banach, then $B(X, Y)$ is Banach.
+
+\proof
+
+$B(X, Y)$ is a vector space:
+
+Choose $\alpha,\beta \in K, T_1, T_2 \in B(X, Y)$. Then $\alpha T_1 + \beta T_2$ is linear and continuous. Hence, $\alpha T_1 + \beta T_2 \in B(X, Y)$. 
+
+Now we show that $(B(X, Y), \norm{T})$ is a normed space. 
+
+\begin{enumerate}
+
+\item $\norm{T} \geq 0$ for all $T \in B(X, Y)$ clearly, and $\norm{T} = 0$ means $Tx = 0$ for any $x \in X$, so $T = 0$. 
+
+\item $\norm{\alpha T} = |\alpha|\norm{T}$
+
+\item Triangle inequality: Choose $x \in B(X, Y)$. Then
+\begin{align*}
+\norm{(T_1 + T_2)x} & = \norm{T_1x + T_2x} \\
+						  & \leq \norm{T_1x} + \norm{T_2x} \\
+						  & \leq \norm{T_1}\norm{x} + \norm{T_2}\norm{x}\\
+						  & = \norm{x}(\norm{T_1} + \norm{T_2}) \\
+\end{align*}
+Thus, $\norm{T_1 + T_2} = \sup_{x\in X, x\neq 0}\norm{(T_1 + T_2)x} \leq \sup_{\norm{x}\leq 1}(\norm{T_1} + \norm{T_2})\norm{x} \leq \norm{T_1} + \norm{T_2}$
+
+\end{enumerate}
+
+Now assume $Y$ is a Banach space. 
+
+Let $\{T_n\} \subseteq B(X, Y)$ be a Cauchy sequence.
+
+We construct an operator $T:X\to Y$ as follows. 
+
+For all $x\in X$, $\{T_nx\}$ is a Cauchy sequence in $Y$. 
+
+Since $Y$ is complete, $\{T_nx\}$ converges to some $Tx$
+
+We want to show $T$ is linear and bounded. 
+
+For all $n \in \N$, $\alpha,\beta\in K$, $x_1, x_2 \in X, T_n(\alpha x_1 + \beta x_2) = \alpha Tx_1 + \beta Tx_2$. 
+
+Thus $T(\alpha x_1 + \beta x_2) = \alpha Tx_1 + \beta Tx_2$
+
+Now we show $T$ is bounded.
+
+Since a Cauchy sequence in a metric space is bounded, $\norm{T_n} \leq M$ for all $n \in \N$. 
+
+For all $x \in \bar{B(0, 1)}, (T_nx)\to Tx$. 
+
+Thus $\norm{Tx} = \lim_{n\to\oo}\norm{T_nx} \leq \lim_{n\to\oo}M\norm{x} \leq M$. 
+
+Hence $\norm{T}\leq M$. 
+
+\,
+
+Finally, we show $(T_n)\to T$. 
+
+Choose $\varepsilon>0$. There exists $N$ such that for all $n \geq N$, for all $k \in \N$, $\norm{T_n - T_{n + k}}<\varepsilon$. 
+
+For all $x \in \bar{B(0, 1)}$, $\norm{T_nx - T_{n + k}x} \leq \varepsilon\norm{x}$. 
+
+Fix $n \geq N$, and let $k\to\oo$ to get $\norm{T_nx - Tx} \leq \varepsilon\norm{x}$. Thus, $\norm{T_n - T} \leq \varepsilon$ for all $n \in \N$> 
+
+So $(T_n) \to T$ in $B(X, Y)$
+
+\qed
+
+\defn
+
+Let $X$ be a normed space over a field $K = \R$ or $\C$. Then $B(X, K) = X^\star$ is called \underline{the dual space of $X$}. $T \in X^\star$ is called a \underline{functional}.
+
+Special case: $X = L^p(\Omega)$, we will characterize $X^\star$. 
+
+When $1 \leq p < \oo$, then $(L^p(\Omega))^\star = L^q(\Omega)$, where $\frac{1}{p} + \frac{1}{q} = 1$ (when $p = 1, q = \oo)$
+
+\thm
+
+Let $X$ be a normed space and $Y$ a Banach space. Assume $A \subseteq X$ is a dense subspace of $X$ and $T\in B(A, Y)$. Then $T$ admits a unique extension $\bar{T}\in B(X, Y).$ Moreover, $\norm{\bar{T}} = \norm{T}$. 
+
+\proof
+
+Chose $x \in X\setminus A$. 
+
+There exists $\{a_n\} \in A$ converging to $x$ because $A$ is dense. Define $Tx = \lim_{n\to\oo}Ta_n$. 
+
+\,
+
+First we show this limit exists. 
+
+Note $\{Ta_n\}$ is Cauchy, since $\norm{Ta_n - Ta_m} \leq \norm{T}\norm{a_n - a_m} \to 0$. 
+
+Since $Y$ is Banach, $\{Ta_n\}$ conveges. 
+
+Now we show the limit does not depend on choice of sequence $\{a_n\}$. 
+
+Assume $\{b_n\}\to X$. Then
+\[
+\norm{Ta_n - Tb_n} = \norm{T} \norm{a_n - b_n} \leq \norm{T}(\norm{a_n - x} + \norm{b_n - x}) \to 0
+\]
+Thus $\lim_{n\to\oo}Ta_n = \lim_{n\to\oo}Tb_n$
+
+Next we show $\bar{T}$ is linear.
+
+\,
+
+Choose $\alpha,\beta \in K, x_1, x_2 \in X$. 
+
+Let $\{a_n\}\to x_1, \{b_n\}\to x_2$ where $\{a_n\},\{b_n\}\subseteq A$. 
+
+$\alpha a_n \to \alpha x_1, \beta b_n \to \beta x_2$
+
+Thus $\alpha a_n + \beta b_n \to \alpha x_1 + \beta x_2$
+
+So
+\[
+\bar{T}(\alpha x_1 + \beta x_2) = \lim_{n\to\oo}T(\alpha x_1 + \beta x_2) = lim_{n\to\oo}T(\alpha x_n) + \lim_{n\to\oo}T(\beta b_n) = \alpha \bar{T}x_1 + \beta \bar{T}x_2
+\]
+
+\qed
 
 
 
