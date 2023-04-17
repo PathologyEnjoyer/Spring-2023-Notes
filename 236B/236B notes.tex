@@ -41,6 +41,8 @@
 \DeclareMathOperator{\SAb}{SAb}
 \DeclareMathOperator{\PAb}{PAb}
 \DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Mor}{Mor}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -384,13 +386,13 @@ and this isomorphism is natural in both $X$ and $Y$.
 
 Let 
 \[
-s(X)(U) \eqdef \frac{\{(\{U_i\}_{i\in I}, e_i) \mid U = \bigcup_{i\in I} U_i, e_i \in X(U_i), e_i|_{U_i \cap U_j} = e_j|_{U_i \cap U_j}\}}{\sim}
+s(X)(U) \eqdef \frac{\{\{(U_i, e_i)\}_{i\in I} \mid U = \bigcup_{i\in I} U_i, e_i \in X(U_i), e_i|_{U_i \cap U_j} = e_j|_{U_i \cap U_j}\}}{\sim}
 \]
-Where $(\{U_i\}, e_i) \sim (\{U_j'\}, e_j)$ if there exists $\{U_k''\}$ refining $\{U_i\}, \{U_j'\}$ and $e_i|_{U_k''} = e_j'|_{U_k''}$ for $U_k'' \subset U_i \cap U_j'$. 
+Where $\{(U_i, e_i)\} \sim \{(U_j', e_j)\}$ if there exists $\{U_k''\}$ refining $\{U_i\}, \{U_j'\}$ and $e_i|_{U_k''} = e_j'|_{U_k''}$ for $U_k'' \subset U_i \cap U_j'$. 
 
 Define $\gamma_{U,V}:sX(U)\to sX(V)$, for $V \subseteq U$, by 
 \[
-\gamma_{U,V}[(\{U_i\},e_i)] = [\{U_i \cap V\}, e_i|_{U_i \cap V}]
+\gamma_{U,V}[\{(U_i,e_i)\}] = [\{(U_i \cap V, e_i|_{U_i \cap V})\}]
 \]
 
 There is a lot to verify; see [GM] 2.5.13
@@ -416,7 +418,7 @@ K\ar[r, "k"] & \iota X \ar[r, "i"] & I \ar[r, "j"] & \iota Y \ar[r, "c"] & K'
 be the canonical decomposition of $\iota(\varphi)$ in (the abelian category!) $\PAb$. Then
 \[
 \begin{tikzcd}
-sK(= K)\ar[r, "sk"] & X (= s\iota X) \ar[r, "si"] & sI \ar[r, "sj"] & Y (= s\iota Y) \ar[r, "sc"] & sK'
+\underbrace{sK}_{=K}\ar[r, "sk"] & \underbrace{X}_{= s\iota X} \ar[r, "si"] & sI \ar[r, "sj"] & \underbrace{Y}_{= s\iota Y} \ar[r, "sc"] & sK'
 \end{tikzcd}
 \]
 is the canonical decomposition of $\varphi$ in $\SAb$. In particular, $\SAb$ is an abelian category. 
@@ -467,7 +469,7 @@ Concretely, $\mc{F}_y \eqdef \frac{\{(s, V) \mid y \in V, s \in \mc{F}(V)\}}{\si
 
 Such an equivalence class is called a \underline{germ}
 
-\rem [GM, I.5.5, I.5.6]
+Remark:[GM, I.5.5, I.5.6]
 
 If we have an exact sequence of sheaves
 \[
@@ -479,13 +481,558 @@ if and only if for any $y \in Y$,
 \]
 is exact. This can be verified as an extremely important exercise.
 
+
 \defn
 
 For $s \in \mc{F}(U)$, the \underline{support of $s$}, $\supp s$, is the closure of the set of points at which the germ of $s$ is not zero. 
 
-\rem 
+Remark:
 
 In the definition of a stalk, we can replace a point $y$ by a closed subset $Z$ of $Y$.
+
+\section*{Lecture 4, 4/10/23}
+
+\subsection*{Functors in abelian categories}
+
+\defn\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Let $\ms{C}, \ms{C}'$ be additive categories. A functor $F:\ms{C}\to\ms{C}'$ is \underline{an additive functor} if all maps $F:\Hom_{\ms{C}}(X, Y) \to \Hom_{\ms{C}'}(FX,FY)$ is a homomorphism of abelian groups.
+
+\item A \underline{complex} in $\ms{C}$ is a sequence
+\[X^\cdot :
+\begin{tikzcd}
+\cdot \ar[r, "d^{n - 1}"] & X^n \ar[r, "d^n"] & X^{n + 1}\ar[r, "d^{n + 1}"] & \cdots \\
+\end{tikzcd}
+\]
+with $d^n\circ d^{n - 1} = 0$ for all $n$
+
+\item Now assume $\ms{C},\ms{C}'$ are abelian categories. If we have a complex, then, because $d^n\circ d^{n + 1} =0 $, the universal properties of the kernel and cokernel (as well as their existence, which is guaranteed because we are in an abelian category), guarantee us unique maps $a^n, b^{n + 1}$ making the diagram commute:
+\[
+\begin{tikzcd}
+ & \coker d^n \ar[dr, dotted, "b^{n + 1}"] & \\
+X^n \ar[r, "d^n"] \ar[dr, "a^n"', dotted] & X^{n + 1}\ar[u] \ar[r, "d^{n + 1}"] & X^{n + 2} \\
+& \ker d^{n + 1} \ar[u] & \\
+\end{tikzcd}
+\]
+ The \underline{$(n + 1)$-cohomology of $X^\cdot$} is
+\[
+H^{n + 1}(X^\cdot) \eqdef \coker a^n = \ker b^{n + 1}
+\]
+this equality can be verified as an exercise.. 
+
+\item $X^\cdot$ is \underline{acyclic at $X^b$} if $H^n(X^\cdot) = 0$.
+
+\item $X^\cdot$ is \underline{exact/acyclic} if it is acyclic at $X^n$ for all $n$
+
+\item An additive functor $F:\ms{C}\to\ms{C}'$ is \underline{exact} if it sends a short exact sequence 
+\[
+\exactshort{X}{}{Y}{}{Z}
+\]
+to a short exact sequence
+\[
+\exactshort{FX}{}{FY}{}{FZ}
+\]
+It is \underline{left exact} if
+\[
+\begin{tikzcd}
+0 \ar[r] & FX \ar[r] & FY \ar[r] & FZ
+\end{tikzcd}
+\]
+is exact, and \underline{right exact} if
+\[
+\begin{tikzcd}
+FX \ar[r] & FY \ar[r] & FZ \ar[r] & 0 
+\end{tikzcd}
+\]
+is exact.
+
+\end{enumerate}
+
+\exm
+
+Let $\ms{C}$ be an abelian category, and consider $\Hom_{\ms{C}}(Y,-):\ms{C}\to\Ab$ and $\Hom_{\ms{C}}(-,Y): \ms{C}^\circ\to\Ab$, where $\ms{C}^\circ$ means the opposite category of $\ms{C}$ (this is just saying this functor is contravariant). These two morphisms are both left-exact.
+
+\exm
+
+For a fixed ring $R$, consider $\RMod$, the category of left $R$-modules, and $Y$ a right $R$-module (so an object of Mod-$R$). Then we have a functor
+\[
+Y\otimes_{R}:\RMod\to\Ab
+\]
+which is right-exact.
+
+\prop
+
+Let $X$ be a topological space, and fix an open set $U \subseteq X$. Consider $\SAb$, the category of abelian sheaves on $X$. The functor $\SAb\to \Ab$ given by $\mc{F}\mapsto\mc{F}(U)$ is an additive functor which is left exact.
+
+\proof
+
+Let $\iota:\SAb\to\PAb$ be the inclusion of sheaves into presheaves. This is left exact, which follows from the fact that the kernel of a morphism of sheaves is again a sheaf. The kernel doesn't need sheafification! Now $\PAb\to\Ab: \mc{F}\mapsto\mc{F}(U)$ is exact by definition. The composition of a left exact and an exact functor is left exact, so we are done. 
+
+\qed
+
+From now on, we will always be working in an abelian category unless otherwise stated.
+
+\defn\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item An object $Y$ is \underline{projective} if $\Hom_{\ms{C}}(Y,-)$ is exact.
+
+\item An object $Y$ is \underline{injective} if $\Hom_{\ms{C}}(-,Y)$ is exact
+
+\item A right module-$R$ $Y$ is \underline{flat} if $Y\otimes_R-$ is exact.
+
+\end{enumerate}
+
+\subsection*{Direct images}
+
+\defn
+
+Let $f:M\to N$ be a continuous map of topological spaces, and let $\mc{F}$ be a sheaf on $M$. The \underline{direct image $f_\star\mc{F}$} (written as $f_\cdot \mc{F}$ in Gelfond-Manin) is defined as follows. 
+
+For any open $U \subseteq N$, $f^{-1}(U)$ is open in $M$. So we simply define
+\[
+f_\star\mc{F}(U) \eqdef \mc{F}(f^{-1}(U))
+\]
+and restriction for $V \subseteq U$ induced from $\gamma_{f^{-1}(U),f^{-1}(V)}$
+
+Exercise: verify that this is indeed a sheaf!
+
+\prop\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Let $f:M\to\{1\}$ be the constant map. Then $f_\star\mc{F} = \Gamma(M,\mc{F}) = \mc{F}(M)$.
+
+\item Let $i:M\to N$ be the inclusion of a closed subspace $M$ of $N$. Then
+\[
+(i_\star\mc{F})_x = \begin{cases} \mc{F}_x & x \in M \\ 0 & x\not\in M\end{cases}
+\]
+
+Some call this an ``extension by zero." (If $i:M\into N$ is the inclusion of an open subset $M$ of $N$, then $i_*\mc{F}$ may have nonzero stalk at $x \in N\setminus M$. Prove this as an exercise!)
+
+\item $f_*:\SAb(M)\to\SAb(N)$ is a functor, $(fg)_* = f_* g_*$
+
+\proof
+
+\qed
+
+\end{enumerate}
+
+\section*{Lecture 5, 4/12/23}
+
+Inverse image. Let $f:M\to N$ be continuous. 
+
+\defn For $\mc{F} \in \SAb_N$, first define $f_p^\star \mc{F}$ as a presheaf:
+\[
+U\mapsto \mc{F}(f(U)) \eqdef \lim_{\to\atop{N \supset V \supset f(U)}}\mc{F}(V)
+\]
+where $V$ is open.
+Then take $f^\star\mc{F} \eqdef s(f_p^\star \mc{F})$
+
+Exercise: for all $x \in M, (f^\star\mc{F})_{x} = \mc{F}_{f(x)}$
+
+\prop
+
+We have an adjunction $f^\star \dashv f_\star$, 
+\[
+\Hom_{\SAb_M}(f^\star\mc{F}, \mc{G}) \cong \Hom_{\SAb_N}(\mc{F}, f_*\mc{G})
+\]
+
+\proof
+
+We know $s \dashv \iota$ by construction. So, we need only show
+\[
+\Hom_{\PAb_M}(f_p^\star\mc{F}, \mc{G}) \cong \Hom_{\PAb_N}(\mc{F}, f_\star\mc{G})
+\]
+
+We establish a functorial morphism: $\mc{F}\to f_\star f_p^\star \mc{F}$. 
+
+Let $\mc{G} = f_p^\star \mc{F}$, 
+\[
+\Hom(f_p^\star\mc{F}, f_p^\star\mc{F}) \cong \Hom(\mc{F}, f_\star f_p^\star\mc{F})
+\]
+
+Note: for $V \subseteq N$ open, $\mc{F}(V) \to f_p^\star (f^{-1}(V))$
+
+But $V$ is open in $N$ containing $f(f^{-1}(V))$. So we have restriction
+
+?????????????
+
+Exercise: Check morphism of presheaves.
+
+This is compatible with restrictions and gives us a presheaf morphism $i_{\mc{F}}:\mc{F}\to f_\star f_p^\star \mc{F}$. 
+
+This induces the isomorphism in the statement. 
+\[
+(\psi:f_p^\star\mc{F}\to \mc{G}) \longrightarrow ((f_\star\psi)\circ i_{\mc{F}}: \mc{F}\to f_*\mc{G}
+\]
+The other direction uses $f_p^\star f_\star \mc{G} \to \mc{G}$
+
+Exercise: construct this and check inverse
+
+\qed
+
+\prop 
+
+Let $\ms{C},\ms{D}$ be Abelian categories. Let $F:\ms{C}\to\ms{D}$ and $G:\ms{D}\to\ms{C}$ be adjoint functors, $F\dashv G$. 
+
+\thm
+
+$F$ is right exact, and $G$ is left exact
+
+\proof
+
+We will just check $G$ is left exact. 
+
+Let $\exactshort{Y'}{f}{Y}{g}{Y''}$ be a short exact sequence.
+
+Apply the left exact functor $\Hom_{\ms{D}}(Fx, -)$ for all $x\in\ms{C}$. We have the diagram
+\[
+\begin{tikzcd}
+0 \ar[r] & \Hom_{\ms{D}} \ar[d, equal] \ar[r] & \Hom_{\ms{D}}(FX, Y') \ar[d, equal] \ar[r] & \Hom_{\ms{D}}(FX, Y'')\ar[d, equal] \\
+0 \ar[r] & \Hom_{\ms{C}}(X, GY') \ar[r] & \Hom_{\ms{C}}(X, GY) \ar[r] & \Hom_{\ms{C}}(X, GY'')
+\end{tikzcd}
+\]
+This is exact for all $X\in\ms{C}$ iff $\begin{tikzcd} 0 \ar[r] & GY' \ar[r] & GY \ar[r] & GY''\end{tikzcd}$ is exact
+
+\prop
+
+In $\SAb, f_\star$ is left exact, $f^\star$ is exact. 
+
+\proof 
+
+By exercise, $f^\star$ is exact on stalks.
+
+\subsection*{Direct images with compact support}
+
+GM, $III8.7->8.10$
+
+All topological spaces are assumed to be locally compact and first countable, meaning every point has a countable neighborhood basis. 
+
+Recall: A morphism of topological spaces is proper if the preimage of compact sets are compact. 
+
+\defn
+
+Let $f:X\to Y$, $\mc{F}$ a sheaf on $X$. Let $U \subseteq Y$ be open. We define
+\[
+F_!\mc{F}(U) = \{s \in \Gamma(f^{-1}(U),\mc{F}) \mid f:\operatorname{supp}(s) \to U\text{ is proper }\}
+\]
+
+\defn
+
+Let $s \in \Gamma(V,\mc{G})$. Then $\supp(s) = \overline{\{x\in V \mid \bar{s} \neq 0 \in \mc{G}_x\}}$, $\Gamma(V, \mc{G}) \to \mc{G}$, $s\mapsto \bar{s}$
+
+\lem\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $f_!\mc{F}$ is a subsheaf of $f_*\mc{F}$
+
+\item $f_!$ is a left exact functor.
+
+\end{enumerate}
+
+\proof
+
+\qed
+
+
+
+\section*{Lecture 6, 4/14/23}
+
+Let $f:X\to Y$ be continuous, and $\mc{F}$ be a sheaf on $X$. Recall the definition of $f_!\mc{F}$ :
+\[
+f_!\mc{F}(U) = \{s \in \underbrace{\Gamma(f^{-1}(U),\mc{F})}_{=f_\star\mc{F}(U)} \mid f:\operatorname{supp}(s) \to U\text{ is proper }\}
+\]
+where $\supp(s)$ is the closure of the set of points where $\bar{s}$, the germ of $s$, $\bar{s}$, is not zero. 
+
+\thm\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $f_!\mc{F}$ is a \underline{subsheaf} of $f_*\mc{F}$. 
+
+\item $f_!$ is a left exact functor "direct image with compact support"
+
+\end{enumerate}
+
+\proof\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $f_!\mc{F}$ is clearly a subpresheaf of $f_\star\mc{F}$. Any set of compatible sections of $f_!\mc{F}$ glue uniquely to a section of $f_\star\mc{F}$. This comes down to a topological statement. 
+
+Exercise: For $(U_i)$ open subsets of $Y$, $f_i:V_i\to U_i$ is proper, then $f: \cup V_i \to \cup U_i$ is proper. 
+\[
+f^{-1}(K) = \cup f_i^{-1}(V_i \cap K)
+\]
+
+\item 
+
+\end{enumerate}
+
+\qed
+
+\subsection*{Sections with compact support}
+
+Consider the special case $f:X\to\{1\}$, the one point space. Then $f_!\mc{F}$ is the set of sections $s \in \mc{F}(X)$ such that $\supp(s)$ is compact. 
+
+\,
+
+Denote this by $\Gamma_c(X, \mc{F})$
+\[
+\begin{tikzcd}
+X \ar[r, "f"] & Y \\
+f^{-1}(y) \ar[u, "i", hook] \ar[r] & y \ar[u, hook]
+\end{tikzcd}
+\]
+
+\prop
+
+The stalk of $f_!\mc{F}$ at $y \in Y$ is isomorphic to 
+\[
+\Gamma_C(f^{-1}(y), \underbrace{\mc{F}|_{f^{-1}(y)}}_{=i^\star\mc{F}})
+\]
+
+\proof
+
+First construct $\varphi:(f_!\mc{F})_y \to \Gamma_c(f^{-1}(y), \mc{F}|_{f^{-1}(y)})$.
+
+Let $s \in f_!\mc{F}_y$ and choose a representative $\tilde{s} \in \Gamma(f^{-1}(U), \mc{F})$ with $U$ an open neighborhood of $y$, and $\supp\tilde{s}\to U$ proper. 
+
+Then: $\tilde{s}|_{f^{-1}(y)}$ is in $\Gamma_c(f^{-1}(y), \underbrace{\mc{F}|_{f^{-1}(y)}}_{=i^\star\mc{F}})$
+
+Exercise: $\varphi(s) \eqdef \tilde{s}|_{f^{-1}(y)}$ only depends on $s$. 
+
+We now show $\varphi$ is injective. Suppose $\varphi(s) = 0$. Then $\supp(\tilde{s}) \cap f^{-1}(y) = \varnothing$. So $y\not\in f(\supp\tilde{s})$. But $f(\supp\tilde{s})$ is closed (proper + locally compact)
+
+So $s = 0$. 
+
+To show $\varphi$ is surjective: choose a local basis $V_i \ni y$ with $\cap V_i = y$. Then $f^{-1}(y) = \cap f^{-1}(U_i)$
+
+Exercise:
+
+Locally compadct implies $\Gamma_c(f^{-1}(y), \mc{F}|_{f^{-1}(y)} = \lim_{\to} A_i$ where
+\[
+A_i = \{t \in \Gamma(f^{-1}(U_i), \mc{F}) \mid \supp t = K \cap f^{-1}(U_i) \text{ for some compact }K \subseteq X\}
+\]
+\qed
+
+\exm
+
+\begin{enumerate}
+
+\item Let $i:U\into X$ be open, $\mc{F}$ a sheaf on $U$. 
+\[
+(i_!\mc{F})_x = \begin{cases} \mc{F}_x, & x \in U \\ 0, & x \in U \end{cases}
+\]
+``extend by 0"
+
+\item $j:V\to X$ proper (in particular, closed embedding), $j_!\mc{G} = j_*\mc{G}$.
+
+
+\end{enumerate}
+
+
+\subsection*{Derived Categories via Localizations}
+
+\defn
+
+Let $f:K^\cdot\to L^\cdot$ be a morphism of complexes in an Abelian category $\mc{A}$. $f$ is a \underline{quasi-isomorphism} if the induced morphism $H^n(f):H^n(K^\cdot)\to H^n(L^\cdot)$ is an isomorphism for all $n$. 
+
+\defn
+
+Let $\mc{A}$ be an Abelian category, $\Kom(\mc{A})$ the category of complexes in $\mc{A}$. The \underline{derived category of $\mc{A}$} is a category $D(A)$ and a functor $Q:\Kom(A)\to D(A)$ such that
+\begin{enumerate}[label=(\alph*)]
+
+\item $Q(f)$ is an isomorphism for any quasi-isomorphism $f$. 
+
+\item $Q$ is universal in the following sense. Suppose that $g:\mc{A}\to \mc{D}$ is a functor such that $g(f)$ is an isomorphism for any quasi-isomorphism $f$. Then there is a unique functor $\bar{f}:D(\mc{A})\to\mc{D}$, making the diagram commute:
+\[
+\begin{tikzcd}
+\Kom(\mc{A}) \ar[rr, "f"] \ar[dr, "Q"'] && \mc{D} \\
+& D(\mc{A}) \ar[ur, "\bar{f}"'] & \\
+\end{tikzcd}
+\]
+
+\end{enumerate}
+
+\thm
+
+Every abelian category admits a derived category.
+
+\proof
+
+\qed
+
+\section*{Lecture 7, 4/17/23}
+
+Homework hint:
+
+Let $\mc{A}$ be an abelian category with $P$ a projective generator. We wish to define an equivalence with $R$-mod, where $R = \Hom_{\mc{A}}(P,P)$. Try to construct an equivalence going the other way as follows:
+
+We want a projective resolution of $M$ 
+\[
+\begin{tikzcd}
+R^{\oplus J} \ar[r] & R^{\oplus I} \ar[r] & M \ar[r] & 0 \\
+\end{tikzcd}
+\]
+We want to use this to get a morphism $P^{\oplus J} \to P^{\oplus I}$. You can do this by taking the identity and looking at the image (?).
+
+\,
+
+Now we continue. 
+
+Remark: We can define $\Kom^+(\mc{A})$ to be all the chain complexes in $\mc{A}$ that are bounded on the right. That is, $\Kom^+(\mc{A}) = \{K^\cdot \mid K^i = 0$ for $i << 0\}$. $\Kom^{-}(\mc{A})$ is defined similarly. 
+\,
+$\Kom^b(\mc{A}) = \Kom^+(\mc{A}) \cap \Kom^-(\mc{A})$. 
+
+These are each abelian categories, so we can consider $D^+(\mc{A}), D^-(\mc{A}), D^b(\mc{A})$, but this is for later. 
+
+\subsection*{\underline{Construction of $D(\mc{A})$}}
+
+This is similar to ``localization of rings"
+
+\defn
+
+A class of morphism $S \subset \Mor \ms{B}$ is said to be \underline{localizing} if
+\begin{enumerate}[label=(\alph*)]
+
+\item $S$ is closed under composition: $\Id_X\in S$ for all $X \in \Ob\ms{B}$ and $s \circ t \in S$ for all $s, t \in S$ such that the composition is defined. 
+
+\item Extension: for all $f \in \Mor \ms{B}$, $s \in S$, there exists $g \in \Mor \ms{B}, t \in S$ such that we can make one of the following diagrams commute:
+\[
+\begin{tikzcd}
+W \ar[r, dotted, "g"] \ar[d, dotted, "t"'] & Z \ar[d, "s"] \\
+X \ar[r, "f"'] & Y
+\end{tikzcd}
+\]
+or
+\[
+\begin{tikzcd}
+W & \ar[l, dotted, "g"'] Z \\
+X \ar[u, dotted, "t"]  & \ar[l, "f"] \ar[u, "s"'] Y
+\end{tikzcd}
+\]
+
+\item If $f, g \in \Mor(X, Y)$, the existence of $s \in S$ with $sf = sg$ is equivalent to the existence of $t \in S$ such that $ft = gt$
+
+\end{enumerate}
+
+\defn
+
+Given a category $\ms{B}$ and class of morphisms $S$ which is localizing, we introduce a category $\ms{B}[S^{-1}]$, with $\Ob \ms{B}[S^{-1}] = \Ob\ms{B}$ and 
+\begin{enumerate}[label=(\alph*)]
+
+\item A morphism $X\to Y$ in $\ms{B}[S^{-1}]$ is the equivalence class of \underline{roofs} of the form 
+\[
+\begin{tikzcd}
+& X' \ar[dl, "s"'] \ar[dr, "f"] & \\
+X & & Y\\
+\end{tikzcd}
+\]
+with $s \in S, f \in \Mor\ms{B}$. Two roofs are equivalent if there exists a third roof making the following diagram commute:
+\[
+\begin{tikzcd}
+& & X\ar[dl, dotted, "y"'] \ar[dr, dotted, "h"] && \\
+& X'\ar[dl, "s"']\ar[drrr,"f"'] && X''\ar[dlll, "t"] \ar[dr, "g"]& \\
+X & && &Y \\
+\end{tikzcd}
+\]
+With $sr = th, fr = gh, y \in S$. $\Id_X$ is the class of
+\[
+\begin{tikzcd}
+& X \ar[dr, "\Id_X"] \ar[dl, "\Id_X"'] & \\
+X & & X\\
+\end{tikzcd}
+\]
+
+\item The composition of roofs $(s, f)$ and $(t, g)$ is the class of $(st', gf')$
+\[
+\begin{tikzcd}
+& & X''\ar[dl, "t'"'] \ar[dr, "f'"] \ar[ddll, "st'"', bend right = 40]\ar[ddrr, "gf'", bend left = 40]& & \\
+& X' \ar[dl, "s"'] \ar[dr, "f"]& & Y'\ar[dl, "t"'] \ar[dr, "g"] & \\
+X& & Y& & Z
+\end{tikzcd}
+\]
+$gt^{-1}fs^{-1} = gf't'^{-1}s^{-1} = (gf)(st')^{-1}$
+
+\end{enumerate}
+
+\thm
+
+This is in fact a well defined equivalence relation
+
+\proof
+
+Symmetry and reflexivity are easy, so we will just show transitivity. Suppose $(s, f) \sim (t, g), (t, g) \sim (u, e)$. We want to show $(s, f) \sim (u, e)$. 
+
+So we have
+\[
+\begin{tikzcd}
+& & Z'\ar[dl, "r"']\ar[dr, "h"] & & Z \ar[dl, "p"'] \ar[dr, "i"]& & \\
+& X' \ar[dl, "s"']\ar[drrrrr,"f"']& & \ar[dlll, "t"']X'\ar[drrr, "g"] & & X'' \ar[dr, "e"]\ar[dlllll,"u"]& \\
+X & & & & & & Y
+\end{tikzcd}
+\]
+$s, t, u, r, p \in S$
+First consider
+\[
+\begin{tikzcd}
+Z' \ar[d, "sr"'] & W \ar[l, dotted, "v"'] \ar[d, dotted, "k"] \\
+X & Z'' \ar[l, "tp"]
+\end{tikzcd}
+\]
+`````````with $sr \in S$. Then $thv = srv = tpk$, so by $c$ there exists $w$ such that $hvw = pkw$ for some $w:Z'''\to W$, $w \in S$. We now build the roof
+\[
+\begin{tikzcd}
+& & Z''' \ar[dl, "rvw"']\ar[dr, "ikw"]& & \\
+& X' \ar[dl, "s"'] \ar[drrr, "f"']& & X''\ar[dr, "e"] \ar[dlll, "u"] & \\
+X & & & & Y 
+\end{tikzcd}
+\]
+
+\qed
+
+\defn
+
+The category $\ms{B}[S^{-1}]$ is called a \underline{localization of $\ms{B}$}. 
+
+Let $F:\ms{B}\to\ms{B}[S^{-1}]$ map each object to its equivalence class. We define $F(f)$ to be the equivalence class of the roof
+\[
+\begin{tikzcd}
+& X \ar[dl, "\Id_X"'] \ar[dr, "f"] & \\
+X & & Y \\
+\end{tikzcd}
+\]
+This satisfies the universal property:
+
+Let $T:\ms{B}\to\ms{D}$ be such that $T(s)$ is an isomorphism for all $s \in S$. Then there exists a unique factorization
+\[
+\begin{tikzcd}
+\ms{B}\ar[dr, "F"'] \ar[rr, "T"] & & \ms{D} \\
+& \ms{B}[S^{-1}] \ar[ur, dotted, "\exists!"'] &
+\end{tikzcd}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
