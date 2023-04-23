@@ -41,6 +41,7 @@
 \DeclareMathOperator{\Monp}{Mon^+}
 \DeclareMathOperator{\AC}{AC}
 \DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator{\Int}{int}
 \title{201C - Functional Analysis}
 \author{John White}
 \date{Spring 2023}
@@ -589,17 +590,170 @@ So
 
 \qed
 
+\section*{Lecture 5, 4/18/23}
+
+\thm Let $X$ be a normed space, and $Y$ a Banach space. Assume $A \subseteq X$ is a dense subspace of $X$ and $T \in B(A, Y)$. Then $T$ admits a unit extension $\bar{T}\in B(X, Y)$. Moreover, $\norm{\bar{T}} = \norm{T}$
+
+\proof
+
+If $x\not\in A$, choose $a_n \in A$ such that $a_n\to x$. Define $\bar{T}x =\lim_{n\to\oo}Ta_n$. Then $\{Ta_n\}$ is Cauchby, and $Y$ is Banach. 
+
+\begin{enumerate}
+
+\item $\bar{T}$ is linear
+
+\item $\bar{T}$ is bounded, with $\norm{\bar{T}} \leq \norm{T}$. 
+
+For any $x \in B(0, 1)$, there exists $a_n\in B(0, 1)$ such that $a_n\to x, a_n \in A$. 
+
+\begin{align*}
+\norm{\bar{T}x}& \leq \norm{\bar{T}x - \bar{T}a_n} + \norm{Ta_n} \\ 
+& \leq \norm{\bar{T}x - Ta_n} + \norm{T}\norm{a_n} \\
+& \leq \norm{\bar{T}x - Ta_n} + \norm{T} 
+\end{align*}
+As $n\to\oo$, we get $\norm{\bar{T}x} \leq \norm{T}$ for all $x \in B(0, 1)$. Thus $\norm{T} = \sup_{x\in B(0, 1)}\norm{\bar{T}x} \leq \norm{T}$
+
+
+\end{enumerate}
+
+\qed
+
+\thm
+
+Let $X$ be a normed space, and let $A = \{x_1, \dots, x_n\}$, where $\{x_i\}_{i=1}^n$ is linearly independent. Then
+\begin{enumerate}
+
+\item $A$ is closed
+
+\item Let $a_k = \sum_{i=1}^n\alpha_ix_i \in A$, and $a_k \to x \in X$. Then by 1, $x \in \langle A \rangle$, i.e. $x = \sum_{i=1}^n\alpha_ix_i$. Then $\alpha_i^k\to\alpha_i$ for $i = 1, 2, \dots, n$. 
+
+(Convergence in A is equivalent to convergence of coordinates).
+
+\end{enumerate}
+
+\proof
+
+First, assume $X$ is a Euclidean space. Define $T:\R^n\to\langle A \rangle$ given by $T(c_1,\dots, c_n) = c_1x_1 + c_2x_2 + \cdots + c_nx_n$. 
+
+Note that
+\begin{itemize}
+
+\item $T$ is linear on $\R^n$. 
+
+\item $T$ is continuous:
+\begin{align*}
+\norm{T(c_1, \dots, c_n)} & = \norm{c_1x_1 + \cdots + c_nx_n} \\
+& \leq |c_1|\norm{x_1} + \cdots + |c_n|\norm{x_n} \\
+& \leq |c|\max_i\norm{x_i}
+\end{align*}
+
+\begin{align*}
+\norm{T(c_1, \dots, c_n) - T(b_1, \dots, b_n)} & = \norm{T(c_1 - b_1, \dots, c_n - b_n)} \\
+& \leq \sum_{i=1}^n|c_i - b_i|\norm{x_i} \\
+& \leq n|c - b|(\max_i\norm{x_i}) \\
+& \leq |c - b|\left(\sum_{i=1}^n\norm{x_i}^2\right)^{\frac12}
+\end{align*}
+
+Thus $T$ is continuous.
+
+\end{itemize}
+
+$S^{n - 1} = \del B(0, 1) = \{(c_1, \dots, c_n) \mid \norm{c} =1 \}$. 
+
+$S^{n - 1}$ is compact, so $f(c) = \norm{Tc}, c \in S^{n - 1}$ attains its minimal value on $S^{n - 1}$. 
+
+$|\norm{x} - \norm{y}| \leq \norm{x - y}$ for all $x,  y \in X$. 
+
+$\min_{c\in S^{n - 1}}\norm{Tc} = \norm{Tc_0}$, where $c_0 = (c_1^\circ, \dots, c_n^\circ) \in S^{n - 1}$
+
+I claim now that $\norm{Tc_0} > 0$. 
+
+$Tc_0 = c_0^1x_1 + \dots + c_0^nx_n \neq 0$, so $\norm{Tc_0} > 0$. 
+
+$r = \norm{Tc_0} = \min_{c\in S^{n - 1}}\norm{Tc}>0$
+
+$\norm{Tc} \geq r > 0$ for all $c \in S^{n - 1}$. 
+
+For all $b \in\R^n, b\neq0$, 
+\begin{align*}
+\norm{Tb} & = \norm{|b|T(\frac{b}{|b|})} \\
+& = |b|\norm{T(\frac{b}{|b|})} \\
+& \geq r|b|
+\end{align*}
+
+Thus $\norm{Tb} \geq rb$ for all $b \in \R^n$. 
+
+Assume now $a_k = \sum_{i=1}^n\alpha_i^kx_i\to x \in X$. 
+
+$a_k = T(\alpha_1^k,\dots,\alpha_n^k), x = \sum_{i=1}^n\alpha_ix_i$.
+
+Since $a_k\to a$, $\norm{a_k} \leq M$. 
+
+So $|(\alpha_1^k,\dots,\alpha_n^k)| \leq \frac{1}{r}\norm{T(\alpha_1^k,\dots,\alpha_n^k)} \leq \frac{M}{r}$
+
+By Bolzano-Weierstrass, there exists $(\alpha_1^{k_\ell}, \dots, \alpha_n^{k_\ell}) \to (\alpha_1,\dots,\alpha_n)$ as $\ell\to\oo$
+
+Since $T$ is continuous, 
+\[
+\alpha_{k_\ell} = T(\alpha_1^{k_\ell},\dots,\alpha_n^{k_\ell}) = \alpha_1x_1 + \cdots + \alpha_nx_n \in \langle A \rangle
+\]
+\qed
+
+\thm[Uniform Boundedness Principle, Banach-Steinhaus Theorem]
+
+Let $X$ be a banach space, and let $Y$ be a normed space. Let $\{T_\alpha\}_{\alpha\in A} \subseteq B(X, Y)$ be a family such that the set $\{T_\alpha x\}_{\alpha\in \bigtriangleup}$ is bounded for all $x \in X$. Then $\{T_\alpha\}$ is bounded in $B(X, Y)$, i.e. there exists $M > 0$ such that $\norm{T_\alpha} \leq M$ for all $\alpha\in \bigtriangleup$
+
+\proof
+
+Consider the sets $A_n = \{x\in X \mid \norm{T_\alpha x} \leq n \forall \alpha\in \bigtriangleup\}\subseteq X$
+
+\begin{enumerate}
+
+\item $\bigcupn A_n = X$. 
+
+\item Each $A_n$ is closed in $X$. 
+
+Let $x_k \in A_n, x_k \to x \in X$. 
+
+We want to show $x \in A_n$. 
+
+$\forall\alpha\in\bigtriangleup, \norm{T_\alpha x_k}\leq n, k = 1, 2, \dots$
+
+As $k\to\oo$, we have that $\norm{T_\alpha x}\leq n$
+
+So $x \in A_n$. 
+
+By Baire Category Theorem, there exists some $A_N$ not nowhere dense. 
+
+$\Int \bar{A_n} = \Int A_n \neq \varnothing$.
+
+So there exists $x_0 \in X, r > 0$  such that $B(x_0, r) \subseteq A_N$. 
+
+Thus $\bar{B}(x_0, \frac{r}{2}) \subseteq A_N$. Let $R = \frac{r}{2}$
+
+$\norm{T_\alpha(\bar{B}(x_0, R)}\leq N\forall\alpha\in\bigtriangleup$
+
+Let $x \in X, \norm{x}<R$. $x = x_0 + x - x_0$
+
+$x_0 + x \in\bar{B}(x_0, R)$. 
+
+\begin{align*}
+\norm{T_\alpha x} & = \norm{T_\alpha(x + x_0) - T_\alpha x_0} \\
+& \leq \norm{T_\alpha(x + x_0)} + \norm{T_\alpha x_0} \\
+& \leq 2N
+\end{align*}
+$\forall x \in\bar{B}(0,R), \forall\alpha\in\bigtriangleup,\norm{T_\alpha x}\leq 2N$
+
+$\forall x\in\bar{B}(0,1),\forall\alpha\in\bigtriangleup,\norm{T_\alpha x}= \norm{\frac{1}{R}T_\alpha (Rx)} = \frac{1}{R}\norm{T_\alpha(Rx)}\leq\frac{1}{R}2N = \frac{2N}{R} = M$
+
+$\forall x\in\bar{B}(0,1),\forall\alpha\in\bigtriangleup,\norm{T_\alpha x}\leq M \implies \norm{T_\alpha}\leq M$
 
 
 
 
 
 
-
-
-
-
-
+\end{enumerate}
 
 
 
