@@ -1082,7 +1082,657 @@ If so, $\Gal(K:F)\Gal(K:L)\cong\Gal(L:F)$
 
 \end{enumerate}
 
+\section*{Lecture 11, 4/24/23}
 
+\proof 
+
+We will now prove the Main Theorem of Galois Theory. 
+
+Part 1 follows from the Little theorem. This implies all intermediate fields are closed and all subgroups of $\Gal(K:F)$ are closed. 
+
+2 and 3 follow from prop 5 on page 13 of this document. 
+
+Now for 4. 
+
+By the Little Theorem, $L \subseteq K$ is Galois. 
+
+By a previous prop, we know $F \subseteq L$ is Galois iff $L$ is stable. 
+By another one, we know $L = \ms{F}\ms{G}(L)$ is stable iff $\Gal(K:L) \underline{\lhd} \Gal(K:F)$
+
+Assume $L$ is stable, let $a \in L \setminus F$. $F \subseteq K$ Galois implies there exists $\phi \in \Gal(K:F)$ such that $\phi(a) = a$. 
+
+By stability, $\phi$ restricts to a map in $\Gal(L:F)$ and $\phi|_L(a) \neq a$. 
+
+Thus $F \subseteq L$ is Galois. 
+
+The last step is left as an exercise. 
+
+\qed
+
+\defn
+
+For $F$ a field, $F[X]$ a polynomial ring, $f \in F[X]$. 
+
+\begin{itemize} 
+
+\item Let $F \subseteq K$ be a field extension. We say that $a \in K \setminus F$ is \underline{a multiple root of $f$} if $(X - a)^2 \mid f$ in $K[X]$.
+
+As an exercise, suppose that $K \subseteq L$ is a field extension, $f, g \in K[X]$ polynomials. Then $f\mid g$ in $K[X]$ iff $f\mid g$ in $L[X]$. 
+
+\item $a$ is a \underline{simple root of $f$} if it's not a multiple root. 
+
+\item If $f$ is irreducible, then $f$ is \underline{separable over $F$} if $f$ has no multiple roots in any extension field. 
+
+\item If $f$ arbitrary, \underline{$f$ is separable over $F$} if all irreducible factors of $f$ are separable over $F$. 
+
+\end{itemize}
+
+Now let $F \subseteq K$ be a field extension. 
+
+\begin{itemize}
+
+\item Suppose $a \in K$ is algebraic over $F$. Then $a$ is \underline{separable over $F$} if $p_{a, F}$ is separable over $F$. 
+
+\item Let $F \subseteq K$ be algebraic. $F \subseteq K$ is \underline{separable} if each $a \in K$ is separable over $F$. 
+
+\item $F \subseteq K$ is \underline{normal} if each polynomial over $F$ with a root in $K$ splits over $K$. 
+
+\end{itemize}
+
+Note: $F\subseteq K$ a field extension. If $F \subseteq K$ is algebraic and Galois, it is separable and normal. 
+
+\exm
+
+Let $[K:F] = 2$. If $\Char F \neq 2$, then $K$ is separable over $F$. 
+
+Say $a \in K$, $p_{a, F} = X^2 + bX + c$. 
+
+$a^2 + ba + c = 0$. 
+
+Suppose $p_{a, F} = (X - d)^2 = X^2 - 2d + d^2$. 
+
+Then $-2d = b \in F$, so $d \in F$. Contradiction.
+
+Thus $[K:F] = 2$ implies $F \subseteq K$ is normal. 
+
+\defn
+
+Let $R$ be a ring, and $f \in R[X]$ a polynomial. 
+
+$f = \sum_{i=0}^nr_iX^i, r_i \in R$. 
+
+Define $f' = \sum_{i=1}^nir_iX^{i - 1}$, the \underline{formal derivative}. 
+
+Exercise: show the product rule holds. That is, $(fg)' = f'g + fg'$. 
+
+\section*{Lecture 12, 4/26/23}
+
+\subsection*{\underline{Separability criterion}}
+
+\thm
+
+Let $F$ be a field, $f \in F[X]$ a polynomial. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $f$ has no multiple roots in any extension field iff $\gcd(f, f') = 1$ 
+
+\item If $f$ is irreducible, then $f$ is separable over $F$ iff $f' \neq 0$. 
+
+\end{enumerate}
+
+Exercise: for $f, g \in F[X] \subseteq K[X], \gcd(f, g) = 1$ in $F[X]$ iff $\gcd(f, g) = 1$ in $K[X]$.
+
+\proof\,
+
+\begin{enumerate}[label=(\alph*)]
+
+\item
+
+\begin{itemize}
+
+\item[$\Rightarrow$] Suppose $\gcd(f, f') \neq 1$. There exists $g \in F[X]$ of degree at least 1 such that $g \mid f$ and $g \mid f'$. 
+
+Let $K \supseteq F$ be a splitting field for $g$. 
+
+Let $a \in K$ be a root of $g$. Thus $f = (X - a)h$ in $K[X]$, $f' = h + (X - a)h'$. 
+
+$(X - a) \mid g$, $g \mid f'$ implies $(X -a ) \mid h$. 
+
+So $(X - a)^2\mid f$ in $K[X]$.
+
+\item[$\Leftarrow$] Suppose $f$ has a multiple root $a$ in an extension field $K$. 
+
+$f = (X - a)^2g, g \in K[X]$. 
+
+$f' = 2(X -a)g + (X - a)^2g'$. 
+
+Thus $(X - a)\mid f' \implies \gcd(f, f') = 1$. 
+
+\end{itemize}
+
+\item
+
+\begin{itemize}
+
+\item[$\Rightarrow$]
+
+Since $f$ is separable, $\gcd(f, f') = 1$ by (a). Thus $f' \neq 0$. 
+
+\item[$\Leftarrow$]
+
+Suppose $f$ is not separable. Then $g = \gcd(f, f') \neq 1$ by (a). 
+
+So $\deg g \geq 1$, $g \mid f, g \mid f'$. 
+
+Since $f$ is irreducible, $g$ is a scalar times $f$. 
+
+So $\deg f = \deg g \leq \deg f < \deg g$. Unless $f' = 0$, this is a contradiction. 
+
+So $f' = 0$. 
+
+\end{itemize}
+
+\end{enumerate}
+
+\qed
+
+\cor
+
+If $\Char F = 0$, all polynomials over $F$ are separable. Therefore, all algebraic field extensions of $F$ are separable. 
+
+\proof
+
+If $\Char F = 0$, then there is no $\Z$-torsion, so the formal derivative can't possibly be zero unless the degree of $f$ is 0. 
+
+\qed
+
+\thm 
+
+Let $F \subseteq K$ be an algebraic field extension. Then the following are equivalent:
+
+\begin{enumerate}
+
+\item $F \subseteq K$ is Galois
+
+\item $F \subseteq K$ is separable and $K$ is a splitting field over $F$ for some set of polynomials in $F[X]$. 
+
+\item $K$ is a splitting field over $F$ for some set of separable polynomials in $F[X]$. 
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(1)\Rightarrow(2)$}
+
+Already done.
+
+\subsection*{$(2)\Rightarrow(3)$}
+
+Let $K$ be a splitting field over $F$ for a set of polynomials $S \subseteq F[X]$. Let $S'$ be a collection of all the monic irreducible polynomial factors in $S$. Clearly, $K$ is also a splitting field of $S'$ over $F$. 
+
+$f \in S^1$ splits over $K$, implying $f$ has a root $a \in K$. 
+
+$f = p_{a, F}$, so $F \subseteq K$ implies $f$ separable over $F$. 
+
+\subsection*{$(3)\Rightarrow(1)$}
+
+Let $K$ be a splitting field over $F$ for some set $S$ of separable polynomials. 
+
+Stepq 1: $[K:F]<\oo$. 
+
+For $n = 1$, this is trivial. 
+
+Suppose $n > 1$. Then $F \subseteq K \Rightarrow$ the polynomials cannot all split over $F$. 
+
+So there exists $g \in S$ that does not split over $F$. 
+
+Thus, $g$ has a monic irreducible factor $f \in F[X]$ such that $\deg f \geq 2$. 
+
+Let $a \in K$ be a root of $f$. 
+
+Thus $f = p_{a, F}, a \neq F$. 
+
+$L = F(a) \supsetneq F$. 
+
+So $[K:L]<n$ by the tower rule. 
+
+This implies
+
+\begin{enumerate}
+
+\item $K$ is a splitting field for $S$ over $L$. 
+
+\item All polynomials in $S$ are separable over $L$.
+
+\end{enumerate}
+
+By induction, this implies that $L \subseteq K$ is Galois. 
+
+So $|\Gal(K:L)| = [K:L]$.
+
+Let $G = \Gal(K:F)$, $H = \Gal(K:L)$. 
+
+$|G| = |H|[G:H]$. 
+
+$[K:F] = [K:L][L:F]$. 
+
+$[L:F] = \deg p_{a, F} = \deg f = m$. 
+
+By prop 5 on page 13, we know $[G:H] \leq [L:F]$. 
+
+$f$ has $m$ distinct roots in $K$, say $a_1, \dots, a_m$. 
+
+By the Extension Lemma, there exist $F$-automorphisms $\phi_i:F(a)\to F(a_i)$ such that $\phi_i(a) = a_i$. 
+
+Let $K$ be a splitting field for $S$ over $F(a)$ and $F(a_i)$. 
+
+By uniqueness of splitting fields, there exists isomorphisms $\psi_i:K\to K$ extending $\phi_i$. 
+
+$\psi_i \in G$. 
+
+$\psi_j^{-1}\psi_i(a) = \psi_j^{-1}(a_i) \neq \psi_j^{-1}(a_j) = $
+
+Thus $\psi_j^{-1}\psi_i \not\in H$ if $i \neq j$. 
+
+So $\psi_iH \neq \psi_jH$. 
+
+Thus $[G:H]\geq m$. 
+
+So $[G:H] = m$, i.e. $|G| = [K:F]$, so $F \subseteq K$ is Galois. 
+
+\section*{Lecture 14, 4/28/23}
+
+We continue the proof. 
+
+For $(3)\Rightarrow(1)$, we have shown step 1, $[K:F]<\oo$. 
+
+Now for step 2: $[K:F]$ arbitrary. 
+
+Let $K = F(R)$, where $R = \{$all roots in $K$ of polynomials in $S\} = \bigcup_{\text{finite }T \subseteq S} R_T = \{$all roots in $K$ of polynomials in $T\}$
+
+$K = \bigcup_{\text{finite }T\subseteq S}F(R_T)$. 
+
+$F(R_T)$ is a splitting field for $T$ over $F$. 
+
+Thus $[F(R_T): F]<\oo$. 
+
+By step 1, $F(R_T)$ is Galois over $F$. 
+
+Look at $a \in K \setminus F$. 
+
+There exists a finite set $T \subseteq S$ such that $a \in F(R_T)$. 
+
+There exists $\phi \in \Gal(F(R_T):F)$ such that $\phi(a) = a$. 
+
+$K$ is a splitting field for $S$ over $F(R_T)$. 
+
+By uniqueness of splitting fields, $\phi$ extends to an isomorphism $\psi:K\to K$. 
+
+$\psi\in\Gal(K:F), \psi(a) = \phi(a) \neq a$. 
+
+Thus $F\subseteq K$ is Galois. 
+
+\qed
+
+\thm
+
+Let $F \subseteq K$ be an algebraic field extension. Let $\bar{K}$ be an algebraic closure of $K$. The following are equivalent:
+
+\begin{enumerate}
+
+\item $F \subseteq K$ normal
+
+\item $K$ is a splitting field for some set $S$ of polynomials over $F$. 
+
+\item $K$ is a stable intermediate field of $F \subseteq \bar{K}$. 
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(1)\Rightarrow(2)$}
+
+$S = \{p_{a, F} \mid a \in K\}$. 
+
+By normality, all $p_{a, F}$ split over $K$. $K = \{$roots of $p\in S$ in $K\}$. 
+
+Therefore $K$ is a splitting field for $S$ over $F$. 
+
+\subsection*{$(2)\Rightarrow(3)$}
+
+Let $\phi\in \Gal(\bar{K}:F)$. 
+
+Let $K = F(R)$, where $R = \{$roots in $K$ of $f\in S\}$. 
+
+For all $f \in S, \phi$ permutes roots of $f$ in $K$. 
+
+Therefore $\phi(R) \subseteq R$, implying $\phi(K) \subseteq F(R) = K$. 
+
+\subsection*{$(3)\Rightarrow(1)$}
+
+Let $f \in F[X]$ be irreducible with a root $a \in K$. We want to show $f$ splits over $\bar{K}$. 
+
+Let $a_1, \dots, a_r$ be the roots of $f$ in $\bar{K}$. 
+
+For all $i$, $p_{a, F} = $constant times $f = p_{a_i, F}$. 
+
+By the Extension Lemma, there exists $F$-isomorphism $\phi_i:F(a)\to F(a_i)$ such that $\phi_i(a) = a_i$. 
+
+Since $\bar{K}$ is an algebraic closure of $F$, it is also an algebraic closure of $F(a)$ and $F(a_i)$. 
+
+By uniqueness of algebraic closures, $\phi_i$ extends to an isomoprhism $\psi_i:\bar{K}\to K$, $\phi_i\in\Gal(\bar{K}:F)$
+
+By stability, $\psi_i(K) \subseteq K$, implying $a_i \in K$. 
+
+Thus $f$ splits over $K$, i.e. $F \subseteq K$ is normal. 
+
+\qed
+
+\thm
+
+Let $F \subseteq K$ be an aglebraic field extension. $F \subseteq K$ is Galois iff it is both separable and normal. 
+
+\proof
+
+Previous 2 theorems.
+
+\qed
+
+\defn
+
+Let $F \subseteq K$ be an algebraic field extension. A \underline{normal closure of $K$ over $F$} is an extension field $L \supseteq K$ such that
+
+\begin{itemize}
+
+\item $F \subseteq L$ is normal. 
+
+\item $L$ is minimal. 
+
+\end{itemize}
+
+\thm
+
+Let $F \subseteq K$ be an algebraic field extension. 
+
+\begin{enumerate}
+
+\item There exists a normal closure $L$ for $F$ over $K$, and $F \subseteq L$ is algebraic. 
+
+\item $L$ is unique up to $K$-isomorphim.
+
+\item If $[K:F]<\oo$, then $[L:F]<\oo$. 
+
+\item If $F \subseteq K$ is separable, then $F \subseteq L$ is Galois. 
+
+\proof
+
+exercise
+
+\qed
+
+\defn
+
+A field $F$ is \underline{perfect} if every algebraic extension field of $F$ is separable over $F$. 
+
+\exm
+
+Anything with $\Char F = 0$ is perfect. $\mbb{F}_2(Y)$ is not perfect, and indeed $\F_p(Y)$ is not perfect for any prime $p$. 
+
+\exm
+
+Any finite field is perfect. Say $F$ a field, $\Char F = p > 0$. $F \to F$, $a \mapsto a^p$, the Frobenius map on $F$.
+
+
+\end{enumerate}
+
+\section*{Lecture 14, 5/1/23}
+
+Frobenius map: $\phi_F:F\to F$, $f(x) = x^p$. 
+
+\thm
+
+Let $F$ be a field. Then the following are equivalent:
+
+\begin{enumerate}
+
+\item $F$ is perfect
+
+\item All extension fields of finite degree over $F$ are separable over $F$. 
+
+\item Every irreducible polynomial in $F[X]$ is separable over $F$. 
+
+\item Either $\Char F = 0$, or $\Char F = p$, and $\phi_F$ is surjective. 
+
+\end{enumerate}
+
+\proof\,
+
+\subsection*{$(1)\Rightarrow(2)$}
+
+Done
+
+\subsection*{$(2)\Rightarrow(3)$}
+
+Chose $p \in F[X]$ irreducible. Then there exists an extension field $K = F(a) \supseteq F$ such that $[K:F]<\oo$,$p(a) =0$. 
+
+$K \supseteq F$ is separable, so $p = p_{a, F}$ is separable over $F$. 
+
+\subsection*{$(3)\Rightarrow(1)$}
+
+Done
+
+\subsection*{$(4)\Rightarrow(3)$}
+
+Assume $\Char F = p > 0$. 
+
+Choose $f \in F[X]$ irreducible. Suppose $f$ is not separable over $F$. 
+
+Exercise: $f = g(X^p)$ for some $g \in F[X]$. 
+
+$g = \sum_{i=0}^nc_iX^i, c_i \in F$. 
+
+there exists $b_i \in F$ such that $b_i^p = c_i$. 
+
+Thus, 
+\begin{align*}
+f & = g(X^p) \\
+  & = \sum_{i=0}^n c_i X^{pi} \\
+  & = \sum_{i=0}^n b_i^p X^{pi} \\
+  & = \left(\sum_{i=0}^nb_iX^i\right)^p
+\end{align*}
+
+This contradicts that $F$ is irreducible. Thus $f$ is separable.
+
+\cor
+
+Any finite field is perfect. 
+
+\lem Let $F$ be any field. Then any finite subgroup $G \subseteq F^*$ is cyclic.
+
+\proof
+
+Since $G$ is abelian, $G$ is a direct product of its Sylow subgroups, which must all be normal. 
+
+By the Chinese Remainder Theorem, it is enough to show all Sylow subgroups are cyclic. 
+
+Without loss of generality, $G$ is in a $p$-group for some prime $p$. 
+
+$M = \{m \geq 0 \mid p^m = $ order of an element in $G\}$. 
+
+$n = \max(M)$, so there exists $x \in G$ such that $|x| = p^n$. 
+
+For all $g \in G, |g| \mid p^n$, so $g^{p^n} = 1$. 
+
+Therefore all $g \in G$ are roots of $X^{p^n} - 1$. 
+
+So $|G| \leq p^n$, implying $G = \langle x \rangle$
+
+\qed
+
+\cor
+
+Any extensions of finite fields is simple.
+
+\proof
+
+Say $F \subseteq K$ is an extension of finite fields. $K^\times = \langle x \rangle$ for some $x \in K$. 
+
+Thus $K = F(x)$. 
+
+\thm (Steinitz's Theorem)
+
+Let $F \subseteq K$ be a field extension, $[K:F]<\oo$. Then following are equivalent:
+
+\begin{enumerate}
+
+\item $K \supseteq F$ is simple. 
+
+\item There exist only finitely many intermediate fields of $F \subseteq K$. 
+
+\end{enumerate}
+
+\proof
+
+\subsection*{$(1)\Rightarrow(2)$}
+
+$K = F(a)$ for some $a \in K$. Let $\ms{L} = \Intermed(F\subseteq K)$, $\ms{P} = \{$monic polynomials in $K[X]$ that divide $p_{a, F}\}$. 
+
+Define $\mu:\ms{L}\to\ms{P}$ by $\mu(L) = p_{a, L}$. 
+
+We claim $\mu$ is injective. 
+
+To prove this claim, we prove if $L \in \ms{L}$, then $L = F($coefficients of $p_{a, L})$. 
+
+Say $p_{a, L} = \sum_{i=0}^nc_iX^i, c_i \in L$. 
+
+Let $L' = F(c_0, \dots, c_n) \subseteq L$. 
+
+$p_{a, L'} \mid p_{a, L}$ in $L'[X]$.
+ 
+$p_{a, L} \mid p_{a, L'}$  in $L[X]$. 
+
+Thus $p_{a, L} = p_{a, L'}$. 
+
+$[K:L] = [L(a):L] = \deg p_{a, L} = \deg p_{a, L'} = [L'(a):L'] = [K:L']$. 
+
+By the tower rule, $[L:F] = [L':F]$, i.e. $L = L'$. 
+
+This implies that $\mu$ is injective. 
+
+Thus $\ms{L}$ is finite. 
+
+\subsection*{$(2)\Rightarrow(1)$}
+
+Without loss of generality, suppose $K$ is infinite. 
+
+So $F$ must be infinite. Let $K = F(a_1, \dots, a_m)$. Suppose $F \subseteq K$ is not simple. 
+
+Choose $i < m$ minimal such that $F(a_1, \dots, a_{i + 1})$ is not simple over $F$. 
+
+Then $F(a_1, \dots, a_i) = F(a)$ for some $a$. 
+
+$F(a_1, \dots, a_i, a_{i + 1}) = F(a, b)$ where $b = a_{i + 1}$.
+
+For all $c \in F$, set $L_c = F(a + cb)$. 
+
+Claim: $L_c \neq L_{c'}$ when $c\neq c'$. 
+
+Why? Suppose $F(a + cb) = L_c = L_{c'} = F(a + c'b)$. 
+
+Then $a + c'b \in F(a + cb)$, so $(c - c')b\in L_c$. 
+
+$c - c' \in F$, so $b \in L_c$. 
+
+Thus $a \in L_c$. 
+
+So $L_c = F(a, b)$
+
+contradiction
+
+Thus we have infintely many intermediate fields, a contradiction.
+
+\qed
+
+
+
+\section*{Lecture ?????, 5/3/23}
+
+\cor
+
+Let $F \subseteq K$ be a seperable field extension with $[K:F]<\oo$. Then $F\subseteq K$ has to be a simple extension. 
+
+\proof
+
+Let $L$ be a normal closure for $K$ over $F$. $[L:F]<\oo$, so $L$ is Galois over $F$. So $\{$intermed fields of $F \subseteq L\}$ is in bijection with $\{$ subgroups of $\underbrace{\Gal(L:F)}_{\text{finite}}\}$
+
+So there are only finitely many intermediate fields for $F \subseteq K$. So by Steinitz, we are done.
+
+\qed
+
+Let $F$ be a finite field. 
+
+\begin{itemize}
+
+\item $\Char F = p > 0$, so the prime field of $F$ is isomorphic to $\mbb{F}_p$.
+
+\item If $n = [F:\mbb{F}_p]$, then $F \cong \mbb{F}_p^n$ as vector spaces, so $|F| = p^n$. 
+
+\item $\phi_F$ is an $\mbb{F}_p$-automorphism of $F$, with $\phi_F$ given by $x \mapsto x^p$.
+
+\item $F$ is perfect, because $\phi_F$ is surjective. 
+
+\item $F^*$ is cyclic. 
+
+\end{itemize}
+
+How can we build fields of order $p^2$? Well, we can adjoin the root of a quadratic. For $p = 2$, consider $X^2 + X + 1 \in \mbb{F}_2[X]$. For $p = 3$, $X^2 + 1 \in \mbb{F}_3[X]$. For $p = 5$, $X^2 + 2 \in \mbb{F}_2[X]$.
+
+Indeed for any odd $p$, $\{x^2 \mid x \in \mbb{F}_p^*\} \subsetneq \mbb{F}_p$. So there is some $k \in \mbb{F}_p^*$ such that $X^2 - k \in \mbb{F}_p[X]$ is irreducible.
+
+Look at $g = X^{p^n} - X \in \F_p, g' = -1$. Then $\gcd(g, g') = 1$, so $g$ is seperable over $\F_p$. Likewise for $f = X^{p^n - 1} - 1$. 
+
+\thm
+
+Let $p$ be a prime, $n \in \N$. Assume there exists a field $F$ of order $p^n$. Then
+
+\begin{enumerate}
+
+\item $F$ is a splitting field over $\F_p$ of $X^{p^n - X}$ or $X^{p^n - 1} - 1$. $\F_p \subseteq F$ is Galois, $\Gal(F:\F_p) = \langle \phi_F \rangle$, $[F:\F_p] = n$. 
+
+\item Let $K \supseteq F$ be an extension field of finite degree. Then $|K| = p^{dn}$, $F \subseteq K$ Galois, $\Gal(K:F) =\langle \phi_K^n\rangle$
+
+\end{enumerate}
+
+\proof
+
+$\Char F = p$, $[F:\F_p]=n$. 
+
+\begin{enumerate}
+
+\item $|F^*| = p^n - 1$, $a^{p^n} = 1$ for all $a \in F^*$, so $a^{p^n} = a$ for all $a \in F$. 
+
+So all $a \in F$ are roots of $g = X^{p^n} - X \in \F_p[X]$.
+
+So $g$ splits over $F$ and is seperable over $\F_p$. This tells us that $F$ is a splitting field for $g$ over $\F_p$. Therefore $F$ is Galois over $\F_p$. 
+
+$|\Gal(F:\F_p)| = n$, $\phi_F:x\mapsto x^p$, $\phi_F^n:x\mapsto x^{p^n}$, so $\phi_F^n = \Id_F$. 
+
+For $1 \leq j < n$:
+\[
+\{a\in F \mid \phi_f^j(a) = a\} = \underbrace{\{\text{roots in $F$ of } X^{p^j} = X\}}_{\text{size }\leq p^j < |F|}
+\]
+so $\phi_F^j\neq\Id_F$, so $|\phi_F| = n$ and $\Gal(F:\F_p) = \langle\phi_F\rangle$.
+
+\item $|K| = |F|^d = p^{dn}$. $\F_p \subseteq K$ is Galois by 1, so $F \subseteq K$ is Galois. 
+
+So $|\Gal(K:F)| = d$. $\phi_K:K\to K, x\mapsto x^p$. 
+
+For all $a \in F, a = a^{p^n} = \phi_K^n(a)$, so $\phi_F^n\in\Gal(K:F)$, and $|\phi_K| = nd$, so $|\phi_K^n| = d = |\Gal(K:F:)|$, so it follows that $\Gal(K:F) = \langle\phi_K^n\rangle$
+
+\end{enumerate}
+
+\qed
 
 
 
