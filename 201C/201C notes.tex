@@ -42,6 +42,7 @@
 \DeclareMathOperator{\AC}{AC}
 \DeclareMathOperator{\Lip}{Lip}
 \DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\esssup}{esssup}
 \title{201C - Functional Analysis}
 \author{John White}
 \date{Spring 2023}
@@ -754,6 +755,515 @@ $\forall x\in\bar{B}(0,1),\forall\alpha\in\bigtriangleup,\norm{T_\alpha x}\leq M
 
 
 \end{enumerate}
+
+\section*{Lecture 6, 4/20/23}
+
+\subsection*{\underline{Open Mapping Theorem}}
+
+\defn
+
+Let $X$ and $Y$ be normed spaces and let $A:X\to Y$. Then $A$ is \underline{open} if it maps open sets in $X$ to open sets in $Y$. 
+
+\thm (Open Mapping Theorem)
+
+Let $X$ and $Y$ be Banach spaces and let $T \in B(X, Y)$ be onto. Then $T$ is open. 
+
+\proof 
+
+omitted from these notes
+
+\qed
+
+\thm (Bounded Inverse Theorem)
+
+Let $X$ and $Y$ be Banach spaces and let $T \in B(X, Y)$ be a bijection. Then $T^{-1}\in B(Y, X)$. 
+
+\proof
+
+omitted from these notes
+
+\qed
+
+\subsection*{\underline{Composition of Operators}}
+
+Assume $X, Y, Z$ are noremd spaces. 
+
+Assume $T \in B(X, Y), S \in B(Y, Z)$. 
+
+Then $S \circ T:X\to Z$ satisfies the properties
+\begin{enumerate}
+
+\item $S \circ T \in B(X, Z)$
+
+\item $\norm{S \circ T} \leq \norm{T}\cdot\norm{S}$
+
+\end{enumerate}
+
+Linearity: 
+\begin{align*}
+S\circ T(\alpha x_1 + \beta x_2) & = S(T(\alpha x_1 + \beta x_2)) \\
+& = S(\alpha Tx_1 + \beta Tx_2) \\
+& = \alpha(S\circ T)x_1 + \beta(S \circ T)x_2
+\end{align*}
+
+Boundedness: choose $x \in X$. Then
+\begin{align*}
+\norm{(S\circ T)x} & = \norm{S(T(x))} \\
+& \leq \norm{S}\norm{Tx} \\
+& \leq \norm{S}\norm{T}\norm{x} \\
+\end{align*}
+
+\subsection*{\underline{Product space and its norm}}
+
+Let $X$ and $Y$ be normed vector spaces. Then $X \times Y = \{(x, y) \mid x \in X, y \in Y\}$ is a vector space. 
+
+\thm
+
+$X \times Y$ becomes a normed space with the norm $\norm{(x, y)} = \norm{x} + \norm{y}$. 
+
+Moreover, if $X$ and $Y$ are Banach, then $X \times Y$ is Banach. 
+
+\proof
+
+omitted
+
+\qed
+
+\section*{Lecture 7}
+
+\thm(Product space as a normed space)
+
+Let $X$ and $Y$ be normed space. Then
+\begin{enumerate}
+\item $(X\times Y, \norm{(\cdot,\cdot)})$ is a normed space.
+
+\item Convergence in $X\times Y$ is equivalent to convergence in coordinates.
+
+\item If in addition $X$ and $Y$ are equivalent, then $(X\times Y, \norm{(\cdot,\cdot)})$ is complete. 
+\end{enumerate}
+
+\thm(Closed graph theorem)
+
+Let $X, Y$ be Banach spaces and let $A:X\to Y$ be linear. Then $A$ is continuous (bounded) iff the graph of $A$ is closed in $X\times Y$. 
+
+\proof
+
+\qed
+
+\defn
+
+Given $X$ and $Y$ sets and an operator $A:X\to Y$, we define the \underline{graph} of $A$ to be the set $\operatorname{Gr}\{(x, Ax) \mid x \in X\}\subseteq X \times Y$. 
+
+Assume now that $X, Y$ are normed spaces. What does it mean for $\operatorname{Gr}A\subseteq X \times Y$ to be closed?
+
+$\operatorname{Gr}A$ is closed if it contains all its limit points. 
+
+Assume $(x_n, Ax_n) \to (x, y)$. 
+
+Thus $x_n \to x, Ax_n \to y$
+We reguire that $(x, y) \in \operatorname{Gr}A$, so $y = Ax$. 
+
+In sum, whenever $x_n \to X$ and $Ax_n\to y$, $y = Ax$. 
+
+\subsection*{\underline{The Hahn-Banach Theorems}}
+
+\defn
+
+Let $X$ be a vector spaces over $\F \in\{\R,\C\}$. 
+
+\begin{enumerate}[label=(\alph*)]
+
+\item A map $q:X\to\R$ is called a \underline{quasi-seminorm} if
+
+\begin{enumerate}[label=(\roman*)]
+\item $q(x + y) \leq q(x) + q(y)$ for all $x,y \in X$ (triangle inequality)
+
+\item $q(tx) = tq(x)$ for all $t > 0, x \in X$. 
+\end{enumerate}
+
+\item A map $P:X\to|R$ is called a \underline{seminorm} if $P$ is a quasi-seminorm and in addition $P(\alpha x) = |\alpha|P(x)$ for all $\alpha\in K, x \in X$. 
+
+\end{enumerate}
+
+\thm (Hahn-Banach, $\R$-version)
+
+Let $X$ be a real vector space and let $Y \subseteq X$ be a subspace. Assume $\phi:Y\to\R$ is a linear function and $q:X\to\R$ is a quasi-seminorm such that $\phi(y) \leq q(y)$ for all $y \in Y$. Then there exists a linear extension $\psi$ of $\phi$ onto $X$ such that it is dominated by $q$ in $X$. 
+
+\begin{enumerate}[label=(\roman*)]
+\item $\psi:X\to\R$ is linear
+\item $\psi(y) = \phi(y)$ for all $y \in Y$
+\item $\psi(x) \leq q(x)$ for all $x \in X$
+\end{enumerate}
+
+\thm($\C$-version, first version)
+
+Let $X$ be a vector space on $\C$ and let $ Y \subseteq X$ be a subspace. Assume $\phi:Y\to\C$ is a $\C$-linear map and $q:X\to\R$ is a quasi-seminorm such that $\operatorname{Re}\phi(y) \leq q(y)$ for all $y \in Y$. Then there exists a linear map $\psi:X\to\C$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $\psi(y) = \phi(y)$ for all $y \in Y$
+\item $\Re\psi(x) \leq q(x)$ for all $x \in X$. 
+\end{enumerate}
+
+\lem 
+
+Let $X$ be a $\C$-vector space and let $\phi:X\to\C$ be given by $\phi(x) = u(x) + iv(x)$, where $u, v:X\to\R$. $u(x) = \Re\phi(x)$, $v(x)= \Im\phi(x)$. Then $\phi$ is $\C$-linear iff $u$ is $\R$-linear and $v(x) = -u(ix)$.
+
+\proof
+
+omitted
+
+\qed
+
+\section*{Lecture 8, 5/2/23}
+
+\defn
+
+$f:D\to D$ is \underline{convex} if for all $\lambda \in [0, 1]$, $x, y \in D$, $f(\lambda x + (1 - \lambda)y) \leq \lambda f(x) + (1 - \lambda)f(y)$. 
+
+Recall a quasi-seminorm is convex, since $q(x + y) \leq q(x) + q(y), q(tx) = tq(x)$ for all $t > 0$. 
+
+\thm (Hahn-Banach)
+
+Let $X$ be a vector space on $K\in\{\C,\R\}$ and let $Y \subseteq X$ be a nonempty subspace. Assume $\phi:Y\to K$ is a $K$-linear map and $q:X\to\R$ is a seminorm such that $|\phi(y)| \leq q(y)$ for all $y \in Y$. Then there eixsts a linear map $\psi:X\to K$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $\psi(y) = \phi(y)$ for all $y \in Y$. 
+\item $|\psi(x)| \leq q(x)$ for all $x \in X$. 
+\end{enumerate}
+
+\proof
+
+omitted
+
+\qed
+
+\defn
+
+A Banach space $X$ is called \underline{reflexive} if $X^*\,^* = \{F_x\}_{x\in X}$, where $F_x$ is the evaluation operator, $f \mapsto f(x)$. 
+
+
+
+\section*{Lecture 9, 5/4/23}
+
+Let $X$ be a normed space. For all $x \in X$, $F_x \in (X^*)^*$, $F_x(f) = f(x)$, for all $f \in X^*$. 
+
+Then $F:X\to\{F_x\mid x\in X\}\subseteq (X^*)^*$
+
+\begin{enumerate}
+
+\item The mapping $F$ is an isometry
+
+\end{enumerate}
+
+\defn
+
+A Banach space $X$ is called \underline{reflexive} if $(X^*)^* = \{F_x \mid x\in X\}$. 
+
+One identifies the subspace $\{F_x \mid x\in X\}$ with $X$. One sets $X \subseteq (X^*)^*$. 
+
+We will prove later that $(L^p(\R^n))^* = L^q(\R^n)$ for all $1 < p < \oo$ where $q>0$ and $\frac{1}{q} + \frac{1}{q} = 1$. In this case $q$ is called the \underline{dual exponent} of $p$. 
+
+Then $((L^p(\R^n))^*)^* = (L^q(\R^n))^* = L^p(\R^n)$, so $L^p(\R^n)$ is reflexive. 
+
+\subsection*{Geometric Hahn-Banach theorems, separation of convex sets}
+
+\defn
+
+Let $X$ be a vector space. 
+
+\begin{enumerate}
+
+\item A set $C \subseteq X$ is called \underline{convex} if $\lambda x + (1 - \lambda)y \in C$ for all $\lambda\in[0,1]$, whenever $x, y \in C$. 
+
+\item A set $A \subseteq X$ is called \underline{absorbing} if for every $x \in X$, there exists $t>0$ such that $tx\in A$. This is equivalent to $X = \bigcup_{t>0}t\cdot C$
+
+\end{enumerate}
+
+\exm 
+
+For $X$ a normed space, then any open or closed ball is convex.
+
+\exm
+
+Any open set containing the origin is absorbing. 
+
+\defn
+
+Let $X$ be a real vector space and let $C \subseteq X$ be a convex and absorbing set containing the origin. So $0 \in C$, $X = \bigcup_{t>0}t\cdot C$. 
+
+For every $x \in X$, define $M_c(x) = \inf\{t>0 \mid x \in t\cdot   C\}$. So $M_c:X\to[0,\oo)$. This is called the \underline{Minkowski functional of $C$}
+
+\thm
+
+Under the conditions of the previous definition, $M_c$ is a quasi-seminorm. 
+
+\proof
+
+\claim
+
+Define $I_C(x) = \{t>0\mid x \in t\cdot C\} \subseteq \R$ for all $x \in X$. $I_c(x)$ has the following properties
+
+\begin{enumerate}
+
+\item $I_C(\lambda x) = \lambda\cdot I_C(x)$ for all $x \in X, \lambda > 0$. 
+
+\item $I_C(x) + I_C(y) \subseteq I_C(x + y)$ for all $x, y \in X$.
+
+\end{enumerate}
+
+\proof\,
+
+\begin{enumerate}
+
+\item Let's prove that $I_C(\lambda x) \leq \lambda\cdot I_C(x)$ for all $\lambda>0$ and all $x \in X$. 
+
+Then $I_C(x) = I_C(\frac{1}{\lambda}\cdot(\lambda x)) \subseteq \frac{1}{\lambda}\cdot I_C(\lambda x)$
+
+So $\lambda\cdot I_C(x) \subseteq I_C(\lambda x)$. 
+
+Let $t \in I_C(\lambda x)$. Then $\lambda x \in t\cdot C$, $x \in \frac{t}{\lambda}\cdot C$. So $\frac{t}{\lambda} \in I_C(x)$, $t \in \lambda\cdot I_C(x)$, so $I_C(\lambda x) \subseteq \lambda I_C(x)$
+
+\item Let $T \in I_C(x)$ and $s \in I_C(y)$. We need to prove $s + t \in I_C(x + y)$. We know $x \in t\cdot C$, and $y \in s\cdot C$.
+
+For some $t, s > 0, c_1, c_2 \in C$, $x = t\cdot c_1, y = s\cdot c_2$. Consider the convex combination $\frac{t}{t + s}\cdot c_1 + \frac{s}{t + s}\cdot c_2 \in C$. So $\frac{1}{t + s}(x + y) \in C$. 
+
+Thus $t + s \in I_C(x + y)$
+
+\end{enumerate}
+
+\qed
+
+So $M_C(\lambda\cdot X) = \lambda \cdot M_C(x)$ for all $\lambda > 0, x \in X$. 
+
+Suppose $A + B \subseteq D$. Then $\inf A + \inf B \geq \inf D$. 
+
+So $M_C(x + y) \leq M_C(x) + M_C(y)$ for all $x, y \in X$. 
+
+\qed
+
+\thm Under the conditions of the definition, one has
+\[
+\{x\in X \mid M_C(x)<1 \} \subseteq C \subseteq \{x\in X \mid M_C(x)\leq 1\}
+\]
+
+\proof\,
+
+\begin{enumerate}
+
+\item $C \subseteq \{x\in X \mid M_C(x)\leq 1\}$. Assume $x \in C$. Then $1\cdot x \in C$. So $1 \in I_C(x)$, so $\inf I_C(x)\leq 1$, so $M_C(x)\leq 1$
+
+\item $\{x\in X \mid M_C(x) < 1\}\subseteq C$. Let $x \in \{x\in X \mid M_C(x)<1\}$. $M_C(x)<1$, so $\inf I_C(x) < 1$. 
+
+So there exists $t<1$ such that $x \in t\cdot C$. 
+
+So $t \in I_C(x)$. $x = t\cdot c, c \in C$. So $x = t\cdot c + (1 - t)\cdot 0 \in C$ because $C$ is convex. 
+
+\end{enumerate}
+
+\qed
+
+\thm
+
+Let $X$ be a real normed space and let $C \subseteq X$ be an open, convex set containing the origin. 
+
+Then $C = \{x \in X \mid M_C(x) < 1\}$
+
+\proof
+
+By previous theorem, we have $\{x \in X \mid M_C(x)<1\}\subseteq X$.
+
+We need to prove that if $M_C(x) = 1$, then $x\not\in C$.
+
+Assume $x \in C$. There exists $\bar{B}_\delta(x)\subseteq C$, $\delta>0$.
+
+$y = x\frac{\norm{x} + \delta}{\norm{x}} \in \bar{B}_\delta(x)$, $\norm{y - x} = \norm{\frac{\delta x}{\norm{x}}} = \delta$
+
+So $\norm{y} = \norm{x} + \delta > \norm{x}$
+
+So $t = \frac{\norm{x}}{\norm{x} + \delta} < 1$, so $x \in t \cdot C$, so $x = t\cdot y, y \in C$. 
+
+So $M_C(x)\leq t < 1$
+
+\qed
+
+\section*{Lecture 10, 5/9/23}
+
+\thm (Separation of a convex set from a point)
+
+Let $X$ be a real normed space, let $C \subseteq X$ be an open convex set and let $x_0\not\in C$. There exists a linear continuous functional $\varphi:X\to\R$ such that
+\begin{enumerate}
+
+\item $\varphi(x_0) = 1$
+
+\item $\varphi(c) < 1$ for all $c \in C$. 
+
+\end{enumerate}
+
+In Euclidean space, $\varphi(x) = \sum_{i=1}^na_ix_i$.
+
+$\varphi(x) = 1$ - hyperplane. 
+
+\proof
+
+$C$ open and $0 \in C \Rightarrow$ $C$ is absorbing. 
+
+Thus the Minkowski functional of $C$, $M_C(x)$, is a quasi-seminorm. 
+
+Theorem 3 gives $C = \{x\in X \mid M_C(x) < 1\}$. 
+
+Consider the subspace $Y = \{tx_0 \mid t\in \R\}\subseteq X$. 
+
+Define $\phi:Y\to\R$ linear functional as $\phi(t\cdot x_0) = t$, for all $t \in \R$, or for all $tx_0 \in Y$. 
+
+Claim 1: $\phi(y) \leq M_c(y)$ for all $y \in Y$. 
+
+Let $y = tx_0$. We want to show that $t = \phi(y) \leq M_c(tx_0)$. 
+
+If $y < 0$, this is obvious, since $M_C(y) \geq 0$ for all $y \in Y$. 
+
+Now assume $t > 0$. 
+
+$M_C$ is a quasi-seminorm, so $M_C(tx_0) = tM_C(x_0)$. 
+
+Since $x_0\not\in C = \{x\in X \mid M_C(x)<1\}$, we have $M_C(x_0)\geq 1$. 
+
+So $M_C(tx_0) \geq t$. 
+
+By Hahn-Banach, we can extend $\phi$ to $X$ as a linear functional that $\leq M_C$. 
+
+Further, $\phi:X\to\R$ is linear, $\phi(x_0) = 1$. 
+
+I'm not finishing this
+
+\qed
+
+
+\thm(Separation of two convex sets)
+
+Let $X$ be a real normed space and let $A, B$ be disjoint convex sets with $A$ open. There exists a continuous linear functional $\phi:X\to\R$ such that $\phi(a) < \alpha \leq \phi(b)$ for all $a\in A, b \in B$, where $\alpha = \inf_{b\in B}\phi(b)$
+
+\proof
+
+\qed
+
+\thm(Separation of Two convex sets)
+
+Let $X$ be a complex normed space and let $A, B$ be disjoint convex sets with $A$ open. There exists a continuous linear funcitonal $\phi:X\to\C$ such that $\Re\phi(a) < \alpha \leq \Re\phi(b)$ for all $a \in A, b \in B$, where $\alpha = \inf_{b\in B}\Re\phi(b)$
+
+\subsection*{\underline{$L^p$ spaces}}
+
+\defn
+
+Assume $\Omega$ is an open set, $p \in [1,\oo]$. For a measurable (Lebesgue-measurable) function $f:\Omega\to\C$, define
+\[
+\norm{f}_{L^p(\Omega)} = \begin{cases} \left(\int_{\Omega}|f(x)|^p\,dx\right)^{\frac{1}{p}} & p \in [1,\oo) \\
+\operatorname{esssup}_{x\in\Omega}|f(x)| & p = \oo \end{cases}
+\]
+
+We define $\operatorname{esssup}_{x\in\Omega}|f(x)| = \inf\{M : |\{x\in\Omega: |f(x)| > M\}| = 0 \}$
+
+Here $|A| = $ Lebesgue measure of $A$. 
+
+Define the set $L^p(\Omega) = \{f:\Omega\to\C:f$ measurable, $\norm{f}_{L^p(\Omega)}<\oo$. 
+
+\thm
+
+$L^p(\Omega)$ is a banach space with norm $\norm{f}_{L^p(\Omega)}$ (modulo almost everywhere agreement of functions). 
+
+\proof
+
+\qed
+
+General setting: $X$ a nonempty set, $\mu$ a measure on $X$. Choose $1 \leq p \leq \oo$. For $f:X\to\bar{\R}$ $\mu$-measurable, define
+\[
+\norm{f}_{L^p(X, \mu)} = \begin{cases} \left(\int_X|f(x)|^p\,dx\right)^{\frac{1}{p}}\, 1 \leq p < \oo \\ \operatorname{esssup}_{x\in X}|f(x)| & p = \oo \end{cases}
+\]
+
+\defn
+
+$\operatorname{esssup}_{x\in X}|f(x)| = \inf\{M:\mu\{x\in X: |f(x)|> M\} = 0\}$
+
+\prop Denote $M_0 = \esssup_{x\in X}|f(x)|$. Then $\mu\{|f(x)|> M_0\} = 0$. 
+
+\proof
+
+\qed
+
+\defn
+
+Define for $1 \leq p \leq \oo$, 
+\[
+\underline{L^p(X,\mu)} = L^p(X) \eqdef \{f:X\to\bar{\R}, f \mu-\text{measurable }, \norm{f}_p < \oo \} 
+\]
+
+For a function $f$, denote by $\hat{f}$ the equivalence class of $f$ under $\mu$-almost everywhere equivalence.
+
+From now on, we identify two functions that agree $\mu$-almost everywhere in $X$. 
+
+\thm $\{\hat{f}\}$ with the norm $\norm{\cdot}_p$ is a Banach space, called the Lebesgue space. 
+
+\lem(Young's Inequality)
+
+Assume $1 < p < \oo$ and $\frac{1}{p} + \frac{1}{q} = 1$. Then $ab \leq \frac{a^p}{p} + \frac{b^q}{q}$ for all $a, b \geq 0$. Equivalently, $a^\lambda b^{1-\lambda} \leq \lambda a + (1 - \lambda)b$ for all $\lambda \in[0, 1]$, $a, b \geq 0$. Convention is to take $0^0 = 0$, or $\lambda \in (0, 1)$. 
+
+\thm
+
+If $\phi \in C^2(\R)$, then $\phi$ is convex iff $\phi''(t) \geq 0$. 
+
+\proof
+
+\qed
+
+\section*{Lecture 11, 5/16/23}
+
+\defn
+
+Let $X$ be a normed space and let $(x_n) \subseteq X, x \in X$. $(x_n)$ converges weakly to $x$ if $\phi(x_n)\to\phi(x)$ for all $\phi\in X^*$. 
+
+Note strong convergence implies weak convergence. 
+
+\defn
+
+Let $X$ be a normed space and let $(f_n) \subseteq X^*$, $f \in X^*$. $(f_n)$ converges weak-* to $f$ if $f_n(x)\to f(x)$ for all $x \in X$. 
+
+If $X$ is reflexive, the above two definitions are equivalent. 
+
+\thm9Alaoglu's Theorem)
+
+Let $X$ be a normed space. The closed unit ball in $X^*$ is weak-* compact. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
